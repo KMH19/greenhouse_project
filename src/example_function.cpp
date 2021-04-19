@@ -2,7 +2,9 @@ int corn = 10;
 bool heat = true; 
 int poppedCorn = 0;
 
-int pop();                  //Bogus function 
+int pop(){
+    poppedCorn++;   // 1 corn -> 1 popcorn
+}; // Function 'pop' end
 
 /*********************************************************************************************
  * @brief                   Function that enables simulation of popcorn making
@@ -16,10 +18,9 @@ if (heat == true)
 {
     for (int i = 0; i < corn; i++)
     {
-        pop();              // Bogus function
-        poppedCorn++;       // 1 corn -> 1 popcorn
-    }
+        pop();                    
+    } 
 
 return poppedCorn;          // Return all of the popcorns
-}
-}
+} // If statement end
+} // Function 'popcornMaker' end
