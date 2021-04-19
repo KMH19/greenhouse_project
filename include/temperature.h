@@ -1,20 +1,14 @@
 #pragma once
 
-class temperature
+class Temperature
 {
 private:
     double temp;
 public:
-    temperature();
-    ~temperature();
-    double getTemperature(){return temp;};
+    Temperature();
+    ~Temperature();
+    double getTemperature();
 
 };
 
-temperature::temperature(/* args */)
-{
-}
 
-temperature::~temperature()
-{
-}
