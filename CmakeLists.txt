@@ -2,6 +2,6 @@ cmake_minimum_required(VERSION 3.20.1)
 
 project(greenhouse_project)
 
-add_executable(greenhouse_project         src/main.cpp)
+add_executable(greenhouse_project src/main.cpp)
 
 target_include_directories(greenhouse_project PRIVATE include)

@@ -1,5 +1,5 @@
 #include <temperature.h>
 
-double Temperature:getTemperature(){
+double Temperature::getTemperature(){
     return temp;
 }
