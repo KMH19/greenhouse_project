@@ -7,6 +7,7 @@ private:
 public:
     CimateControl(/* args */);
     ~CimateControl();
+    void controlclimate();
 };
 
 
