@@ -1,3 +1,5 @@
+// This function showcases a way of commenting code with the use of brief, param and return commands
+
 int corn = 10;
 bool heat = true; 
 int poppedCorn = 0;
