@@ -7,6 +7,10 @@ private:
 public:
     HardstateOutput(/* args */);
     ~HardstateOutput();
+
+    double SetFanSpeed();
+    double SetWateringSpeed();
+    double SetLightIntensity();
 };
 
 
