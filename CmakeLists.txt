@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(SSP_project)
+project(greenhouse_project)
 
 set(BUILD_SHARED_LIBS FALSE CACHE BOOL "Setting SFML to build static libraries" FORCE)
 set(SFML_USE_STATIC_STD_LIBS TRUE CACHE BOOL "Use static versions of the C++ std libs" FORCE)
@@ -11,11 +11,12 @@ set(IMGUI_SFML_IMGUI_DEMO ON CACHE BOOL "make the demo window" FORCE)
 
 add_subdirectory(libs/imgui-sfml)
 
-add_executable(SSP_project src/greenhouse-sim.cpp src/example_function.cpp src/hardstate_output.cpp src/imgui-example.cpp src/main.cpp src/sensor_input.cpp src/temperature.cpp)
+add_executable(greenhouse_project src/greenhouse-sim.cpp src/example_function.cpp src/hardstate_output.cpp src/imgui-example.cpp src/main.cpp src/sensor_input.cpp src/temperature.cpp)
 
-add_dependencies(SSP_project sfml-graphics ImGui-SFML)
-target_include_directories(SSP_project PUBLIC libs/SFML/include include)
-target_link_libraries(SSP_project sfml-graphics ImGui-SFML)
+add_dependencies(greenhouse_project sfml-graphics ImGui-SFML)
+target_include_directories(greenhouse_project PUBLIC libs/SFML/include)
+target_include_directories(greenhouse_project PRIVATE include)
+target_link_libraries(greenhouse_project sfml-graphics ImGui-SFML)
 
 add_executable(imgui-example src/imgui-example.cpp)
 add_dependencies(imgui-example sfml-graphics ImGui-SFML)
