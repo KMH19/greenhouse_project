@@ -8,6 +8,6 @@ void HardstateOutput::SetWateringSpeed(double set_watering_speed){
     watering_speed = set_watering_speed;
 }
 
-void HardsateOutput::SetLightIntensity(double set_light_intensity){
+void HardstateOutput::SetLightIntensity(double set_light_intensity){
     light_intensity = set_light_intensity;
 }

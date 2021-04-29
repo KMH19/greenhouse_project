@@ -4,7 +4,7 @@ int corn = 10;
 bool heat = true; 
 int poppedCorn = 0;
 
-int pop(){
+void pop(){
     poppedCorn++;   // 1 corn -> 1 popcorn
 }; // Function 'pop' end
 
