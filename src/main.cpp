@@ -1,14 +1,15 @@
 #include <plant.h>
 #include <climate_control.h>
 #include <temperature.h>
+#include "interface.h"
+
+
 
 int main(int argc, char const *argv[])
 {
-    /* code */
-    int k = 5;
-    //Plant new_plant;
-    //ew_plant.SetPlantType();
+    // Simulation::Interface gui;
+    // gui.Init();
     
     return 0;
-    //hahahhahahahahha
+
 }

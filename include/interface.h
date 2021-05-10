@@ -20,16 +20,15 @@ bool getLight()   { return light_c;   };
 bool getHeating() { return heating_c; };
 };  // Class "Interface" end
 
-class Stalks 
+class Interface
 {
 private:
-float size{0.};
 
 public:
-bool getSize()     { return size;     };
+void Init(); 
 
-void addStalk(float  &setStalks_c) {}
-void growStalk(float &amount) {}
 };
+
+
 
 }   // Namespace "Simulation" end
