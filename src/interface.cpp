@@ -70,6 +70,23 @@ void Simulation::Interface::Init()
         ImGui::SFML::Update(window, deltaClock.restart());
         ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
         ImGui::Begin("Menu");
+        if (ImGui::CollapsingHeader("Help"))
+        {
+            ImGui::Text("USAGE:");
+            ImGui::BulletText("Use the hardstates windows to turn fan, heating, watering or light (on/off), \n");
+            ImGui::Separator();
+        }
+        if (ImGui::CollapsingHeader("Hardstates"))
+        {
+            if (ImGui::BeginTable("split", 4))
+            {
+                ImGui::TableNextColumn(); ImGui::Checkbox("Fan",        &fan_c);
+                ImGui::TableNextColumn(); ImGui::Checkbox("Heating",    &heating_c);
+                ImGui::TableNextColumn(); ImGui::Checkbox("Watering",   &water_c);
+                ImGui::TableNextColumn(); ImGui::Checkbox("Light",      &light_c);
+                ImGui::EndTable();
+            }
+        }
         if (ImGui::CollapsingHeader("Plant length"))
         {
             if (ImGui::SliderFloat("Length", &stalk_length, 0., 300.)) 
