@@ -1,12 +1,14 @@
 #pragma once
-#include <string>
 
-class Plant
-{
-private:
-    double grow_rate_coefficient;
+    class Plant
+    {
+
+    private:
+    double growth_rate;
 
     double target_temperature;
+
+    public:
 
     enum plant_type 
     {    
@@ -16,9 +18,18 @@ private:
     paradise_tree   = 3
     };
 
-public:
+    Plant::plant_type getPlant() const;
+    void setType(Plant::plant_type v);
 
+    double GetTargetTemperature() { return target_temperature; }
 
+    void grow(int days);
 
-};
+    private:
+    plant_type type_;
+
+    
+
+    };
+
 
