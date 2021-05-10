@@ -7,6 +7,7 @@ int main(int argc, char const *argv[])
     int k = 5;
     Plant new_plant;
     new_plant.SetPlantType();
+    
     return 0;
     //hahahhahahahahha
 }
