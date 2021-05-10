@@ -5,7 +5,8 @@ int main(int argc, char const *argv[])
 {
     /* code */
     int k = 5;
-    Plant::SetPlantType();
+    Plant new_plant;
+    new_plant.SetPlantType();
     return 0;
     //hahahhahahahahha
 }
