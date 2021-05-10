@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.20.1)
 
-project(0_main)
+project(greenhouse_project)
 
 add_subdirectory(libs/SFML)
 set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/libs/imgui)
 set(IMGUI_SFML_FIND_SFML:BOOL=OFF)
 add_subdirectory(libs/imgui-sfml)
 
-add_executable(0_main       src/hard_states.cpp
-                            src/climate_change.cpp
-                            src/tomato_plant.cpp
-                            src/cucumber_plant.cpp
-                            src/0_main.cpp)
+add_executable(greenhouse_project       src/hardstate_output.cpp
+                                        src/sensor_input.cpp
+                                        src/temperature.cpp
+                                        src/plant.cpp
+                                        src/main.cpp)
 
 include_directories(        include
                             libs/SFML/include
@@ -19,6 +19,6 @@ include_directories(        include
                             libs/imgui-sfml)
 
                             
-target_link_libraries(0_main sfml-system sfml-graphics ImGui-SFML::ImGui-SFML)
+target_link_libraries(greenhouse_project sfml-system sfml-graphics ImGui-SFML::ImGui-SFML)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}) 
