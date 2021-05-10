@@ -10,6 +10,7 @@ public:
     Plant(/* args */);
     ~Plant();
     void GetCurrentPlantInfo();
+    void SetPlantType();
 
 };
 
