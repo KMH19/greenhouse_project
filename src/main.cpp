@@ -9,6 +9,9 @@ int main(int argc, char const *argv[])
 {
     // Simulation::Interface gui;
     // gui.Init();
+    Plant new_plant;
+    
+
     
     return 0;
 
