@@ -7,7 +7,8 @@ set(IMGUI_DIR ${CMAKE_SOURCE_DIR}/libs/imgui)
 set(IMGUI_SFML_FIND_SFML:BOOL=OFF)
 add_subdirectory(libs/imgui-sfml)
 
-add_executable(greenhouse_project       src/hardstate_output.cpp
+add_executable(greenhouse_project       src/interface.cpp
+                                        src/hardstate_output.cpp
                                         src/sensor_input.cpp
                                         src/temperature.cpp
                                         src/plant.cpp
