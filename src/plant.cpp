@@ -4,3 +4,7 @@
 void Plant::SetPlantType(){
     std::cin >> plant_type;
 }
+
+void Plant::GetCurrentPlantInfo(){
+    
+}
