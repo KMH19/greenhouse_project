@@ -16,6 +16,6 @@ public:
     double GetTomatoInfo();
     double GetCucumberInfo();
     double GetParadiseInfo();
-    void GetPlantInfo(int plant_number);
+    void GetPlantInfo(int plant_number, double &grow_rate, double &target_temperature);
 };
 
