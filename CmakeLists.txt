@@ -11,7 +11,7 @@ set(IMGUI_SFML_IMGUI_DEMO ON CACHE BOOL "make the demo window" FORCE)
 
 add_subdirectory(libs/imgui-sfml)
 
-add_executable(greenhouse_project src/greenhouse-sim.cpp src/example_function.cpp src/hardstate_output.cpp src/imgui-example.cpp src/main.cpp src/sensor_input.cpp src/temperature.cpp)
+add_executable(greenhouse_project src/greenhouse-sim.cpp src/example_function.cpp src/hardstate_output.cpp src/imgui-example.cpp src/main.cpp src/sensor_input.cpp src/temperature.cpp src/plant.cpp)
 
 add_dependencies(greenhouse_project sfml-graphics ImGui-SFML)
 target_include_directories(greenhouse_project PUBLIC libs/SFML/include)
