@@ -12,7 +12,8 @@ add_executable(greenhouse_project       src/interface.cpp
                                         src/sensor_input.cpp
                                         src/temperature.cpp
                                         src/plant.cpp
-                                        src/main.cpp)
+                                        src/main.cpp
+                                        src/plant_lib.cpp)
 
 include_directories(        include
                             libs/SFML/include
