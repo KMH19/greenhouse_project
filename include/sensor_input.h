@@ -4,12 +4,12 @@ class SensorInput
 {
 private:
     double temperature;
-    double air_hunmidity;
+    double air_humidity;
     double soil_humidity;
 
 public:
-    SensorInput(/* args */);
-    ~SensorInput();
+    // SensorInput(/* args */);
+    // ~SensorInput();
     double getTemperature();
     double getAirHumidity();
     double getSoilHumidity();

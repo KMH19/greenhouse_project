@@ -8,6 +8,10 @@
 
     double target_temperature;
 
+    double height;
+
+    int stalks; 
+
     public:
 
     enum plant_type 

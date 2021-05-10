@@ -11,5 +11,8 @@ public:
     ~PlantLib();
     
     void GetPlantInfo(int plant_number, double &grow_rate, double &target_temperature);
+
+    // Maybe implement reading plant growth rate and target temperature to be read from here.
+
 };
 

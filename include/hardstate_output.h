@@ -7,8 +7,8 @@ private:
     double watering_speed;
     double light_intensity;
 public:
-    HardstateOutput(/* args */);
-    ~HardstateOutput();
+    // HardstateOutput(/* args */);
+    // ~HardstateOutput();
 
     void SetFanSpeed(double fan_speed_1);
     void SetWateringSpeed(double set_watering_speed);

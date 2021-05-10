@@ -8,8 +8,9 @@
 
 int main(int argc, char const *argv[])
 {
-    // Simulation::Interface gui;
-    // gui.Init();
+    Simulation::Interface gui;
+    gui.Init();
+    
     Plant new_plant;
 
     new_plant.setType(Plant::cucumber_plant);

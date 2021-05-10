@@ -13,7 +13,6 @@
 #include "interface.h"
 
     float stalk_length = 0.;
-    float stalk_length2 = 0.;
 
     bool fan_c = false;
     bool heating_c = false;
@@ -22,11 +21,32 @@
 
 void Simulation::Interface::Init() 
 {
-
     sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, stalk_length}};
     tomato_stalk.setPosition(512, 384);
     tomato_stalk.setRotation(180);
     tomato_stalk.setFillColor(sf::Color{0, 255, 0});
+
+    sf::RectangleShape tomato_stalk2 {sf::Vector2f{5.0, 75}};
+    tomato_stalk2.setPosition(512, 300);
+    tomato_stalk2.setRotation(150);
+    tomato_stalk2.setFillColor(sf::Color{0, 255, 0});
+
+    sf::RectangleShape tomato_stalk3 {sf::Vector2f{5.0, 75}};
+    tomato_stalk3.setPosition(512, 300);
+    tomato_stalk3.setRotation(-150);
+    tomato_stalk3.setFillColor(sf::Color{0, 255, 0});
+
+    sf::RectangleShape tomato_stalk4 {sf::Vector2f{5.0, 90}};
+    tomato_stalk4.setPosition(512, 200);
+    tomato_stalk4.setRotation(150);
+    tomato_stalk4.setFillColor(sf::Color{0, 255, 0});
+
+    sf::RectangleShape tomato_stalk5 {sf::Vector2f{5.0, 100}};
+    tomato_stalk5.setPosition(512, 200);
+    tomato_stalk5.setRotation(-150);
+    tomato_stalk5.setFillColor(sf::Color{0, 255, 0});
+
+
 
     // create the window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "My window");
@@ -52,21 +72,36 @@ void Simulation::Interface::Init()
         ImGui::Begin("Menu");
         if (ImGui::CollapsingHeader("Plant length"))
         {
-            if (ImGui::SliderFloat("Length", &stalk_length, 0., 300.)) {
+            if (ImGui::SliderFloat("Length", &stalk_length, 0., 300.)) 
+        {
+            tomato_stalk.setSize(sf::Vector2f{5.0, stalk_length});
         }
+        }
+
 
         ImGui::End();
 
         // clear the window with black color
         window.clear(sf::Color::Black);
 
-        // draw everything here...
+
+        if (stalk_length < 85){
         window.draw(tomato_stalk);
+        }else if (stalk_length < 199){
+        window.draw(tomato_stalk);
+        window.draw(tomato_stalk2);
+        window.draw(tomato_stalk3);
+        }else if (stalk_length < 301){
+        window.draw(tomato_stalk);
+        window.draw(tomato_stalk2);
+        window.draw(tomato_stalk3);
+        window.draw(tomato_stalk4);
+        window.draw(tomato_stalk5);
+        }
 
         ImGui::SFML::Render(window);
 
         // end the current frame
         window.display();
-        }
     }
 }
