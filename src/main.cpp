@@ -1,4 +1,5 @@
 #include <plant.h>
+#include <climate_control.h>
 #include <temperature.h>
 
 int main(int argc, char const *argv[])
