@@ -14,5 +14,4 @@ void ClimateControl::controlclimate(){
         hardstate_output.SetFanSpeed(0);
     }
 
-
 }

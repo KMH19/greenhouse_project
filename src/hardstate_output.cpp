@@ -1,7 +1,5 @@
 #include <hardstate_output.h>
 
-
-
 void HardstateOutput::SetFanSpeed(double fan_speed_1){
     fan_speed = fan_speed_1;
 }

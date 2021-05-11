@@ -1,3 +1,5 @@
+
+
 #pragma once
 
     class Plant
@@ -8,9 +10,9 @@
 
     double target_temperature_;
 
-    double height_;
+    double height_{0};
 
-    int stalks_; 
+    int stalks_{10}; 
 
     public:
 
@@ -29,8 +31,8 @@
 
     void grow(int days);
 
+    double getHeight() { return height_; };
+
     private:
     plant_type type_;
     };
-
-

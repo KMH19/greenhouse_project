@@ -1,20 +1,30 @@
 #include <iostream>
+
 #include "plant.h"
-#include "climate_control.h"
-#include "temperature.h"
 #include "interface.h"
+#include "temperature.h"
+#include "sensor_input.h"
+#include "climate_control.h"
 
 
 int main(int argc, char const *argv[])
 {
-    Plant new_plant;
+    Plant plant_entity;
 
-    new_plant.setType(Plant::cucumber_plant, 0.5, 25);
+    Simulation::Controls sim;
+    
+    SensorInput sensor1;
 
-    std::cout << "Current plant: " << new_plant.getPlant() << std::endl;
+    plant_entity.setType(Plant::cucumber_plant, 0.5, 25);
 
-    Simulation::Interface gui;
-    gui.Init();
+    
+
+    std::cout << "Current plant: " << plant_entity.getPlant() << std::endl;
+
+    sim.SimulateOneDay(10, plant_entity, sensor1);
+
+    // Simulation::Interface gui;
+    // gui.Init();
     
     return 0;
 }

@@ -11,6 +11,8 @@
 #include "imgui-SFML.h"
 
 #include "interface.h"
+#include "plant.h"
+#include "sensor_input.h"
 
     float stalk_length = 0.;
 
@@ -18,6 +20,25 @@
     bool heating_c = false;
     bool water_c = false;
     bool light_c = false;
+
+
+
+void Simulation::Controls::SimulateOneDay(int days_, Plant &p, SensorInput &s) {
+    using namespace std::chrono_literals;
+    for (int i = 0; i < days_; i++)
+    {
+        std::cout << "Day no.: " << 1+i << std::endl;
+        std::cout << "-----------------------" << std::endl << std::endl;
+
+        p.grow(1);
+
+        
+
+        std::cout << "Plant height: " << p.getHeight() << std::endl << std::endl;
+
+        std::this_thread::sleep_for(2s);
+    }
+}
 
 void Simulation::Interface::Init() 
 {
@@ -121,7 +142,5 @@ void Simulation::Interface::Init()
     }
 } 
 
-void Simulation::Controls::Simulate() {
 
-}
 
