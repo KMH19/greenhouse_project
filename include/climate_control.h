@@ -1,5 +1,4 @@
 #pragma once
-#include <plant.h>
 #include <sensor_input.h>
 #include <hardstate_output.h>
 
@@ -10,15 +9,11 @@ bool auto_state_{true};
 
 public:
 
-void Automatic() 
-{
-}
+void Automatic(SensorInput& s);
 
-void Manual() 
-{
-}
+void Manual();
 
-bool getState() { return auto_state_; }
+bool checkAutoState() { return auto_state_; }
 void changeState(bool& i);
 
     // ClimateControl(double plant_target_temperature){

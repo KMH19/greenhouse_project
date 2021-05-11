@@ -51,7 +51,16 @@
         std::cout << "Current air humidity: " << air_humidity_c << std::endl << std::endl;
 
         std::cout << "Current soil humidity: " << soil_humidity_c << std::endl << std::endl;
+        
+        bool check = c.checkAutoState();
 
+        if (check == true)
+        {
+            c.Automatic(s);
+        }else{
+
+            c.Manual();
+        }
         
         std::this_thread::sleep_for(2s);
     }
