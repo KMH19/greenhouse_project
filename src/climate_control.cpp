@@ -1,18 +1,12 @@
 #include <climate_control.h>
 
-<<<<<<< HEAD
 void ClimateControl::changeState(bool& i)
 {
     if (i == auto_state_) return;
     auto_state_ = i;
 }
 
-// void ClimateControl::controlclimate(HardstateOutput &control_output, SensorInput &control_input){
-=======
-// Compareing the temperature with the target temperature and adjust the fanspeed if the temperature is to high. :)
-void ClimateControl::controlclimate(HardstateOutput &control_output, SensorInput &control_input){
->>>>>>> c87f26424aea7f872ad42dcfc32324505f97bc2f
-    
+// void ClimateControl::controlclimate(HardstateOutput &control_output, SensorInput &control_input){    
 //     double temperary_temperture = control_input.getTemperature();
 //     if(temperary_temperture > target_temperature){
 //         control_output.SetFanSpeed(100);
