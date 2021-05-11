@@ -1,4 +1,5 @@
 #pragma once
+#include "plant.h"
 
 class PlantLib
 {
@@ -7,8 +8,7 @@ private:
     
 
 public:
-    PlantLib(/* args */);
-    ~PlantLib();
+    
     
     void GetPlantInfo(int plant_number, double &grow_rate, double &target_temperature);
 

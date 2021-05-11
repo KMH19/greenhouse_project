@@ -10,7 +10,6 @@ add_subdirectory(libs/imgui-sfml)
 add_executable(greenhouse_project       src/interface.cpp
                                         src/hardstate_output.cpp
                                         src/sensor_input.cpp
-                                        src/temperature.cpp
                                         src/plant.cpp
                                         src/main.cpp
                                         src/plant_lib.cpp

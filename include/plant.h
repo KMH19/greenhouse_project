@@ -1,10 +1,8 @@
-
-
 #pragma once
+#include "plant_base.h"
 
-    class Plant
-    {
-
+class Plant : public plant_base 
+{
     private:
     double growth_rate_;
 
@@ -24,15 +22,15 @@
     paradise_tree   = 3
     };
 
+    void grow(int days) override;
+
+    double getHeight() override { return height_; };
+
     Plant::plant_type getPlant() const;
     void setType(Plant::plant_type v, double growth_rate, double target_temperature);
 
     double GetTargetTemperature() { return target_temperature_; }
 
-    void grow(int days);
-
-    double getHeight() { return height_; };
-
     private:
     plant_type type_;
-    };
+};

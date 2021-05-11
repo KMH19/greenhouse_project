@@ -1,8 +1,8 @@
-
 #pragma once
 #include <vector>
 #include "plant.h"
 #include "sensor_input.h"
+#include "climate_control.h"
 
 namespace Simulation 
 {
@@ -14,8 +14,13 @@ bool water_c{false};
 bool light_c{false};
 bool heating_c{false};
 
-double current_temperature{20};
-double current_humidity{20};
+double temperature_c{20};
+double air_humidity_c{20};
+double soil_humidity_c{20};
+
+double x;
+
+std::vector<double> temp_sim_c = {15.4, 15.6, 17, 18, 20, 21, 25, 20, 20, 21, 25, 20, 15.4, 15.6, 17, 18, 15.4, 15.6, 17, 18};
 
 public:
 bool getFan()     { return fan_c;     };
@@ -23,11 +28,11 @@ bool getWater()   { return water_c;   };
 bool getLight()   { return light_c;   };
 bool getHeating() { return heating_c; };
 
-void SimulateOneDay(int days, Plant &p, SensorInput &s);
+void SimulateOneDay(int days, Plant& p, SensorInput& s, ClimateControl& c);
 
-double getTemp_c()  { return current_temperature; };
-double getHum_c()   { return current_humidity; };
-
+double getTemp_c()      { return temperature_c;   };
+double getAirHum_c()    { return air_humidity_c;  };
+double getSoilHum_c()   { return soil_humidity_c; };
 
 };  // Class "Interface" end
 

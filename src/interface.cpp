@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <math.h>
 
 #include "interface.h"
 
@@ -13,6 +14,7 @@
 #include "interface.h"
 #include "plant.h"
 #include "sensor_input.h"
+#include "climate_control.h"
 
     float stalk_length = 0.;
 
@@ -21,9 +23,9 @@
     bool water_c = false;
     bool light_c = false;
 
+    void Simulation::Controls::SimulateOneDay(int days_, Plant& p, SensorInput& s, ClimateControl& c) 
+    {
 
-
-void Simulation::Controls::SimulateOneDay(int days_, Plant &p, SensorInput &s) {
     using namespace std::chrono_literals;
     for (int i = 0; i < days_; i++)
     {
@@ -32,10 +34,25 @@ void Simulation::Controls::SimulateOneDay(int days_, Plant &p, SensorInput &s) {
 
         p.grow(1);
 
-        
+        double x = temp_sim_c[i];
+
+        // This tells the current air humidity (Polynomial factor)
+        air_humidity_c = 0.1*pow(x,2)+10;
+
+        // This tells the current soil humidity, based on atmospheric temperature and humidity
+        soil_humidity_c = 0.005*pow(x,2);
+      
+        s.sensorRead(temp_sim_c[i], air_humidity_c, soil_humidity_c);   
 
         std::cout << "Plant height: " << p.getHeight() << std::endl << std::endl;
 
+        std::cout << "Current temperature: " << temp_sim_c[i] << std::endl << std::endl;
+
+        std::cout << "Current air humidity: " << air_humidity_c << std::endl << std::endl;
+
+        std::cout << "Current soil humidity: " << soil_humidity_c << std::endl << std::endl;
+
+        
         std::this_thread::sleep_for(2s);
     }
 }
@@ -66,8 +83,6 @@ void Simulation::Interface::Init()
     tomato_stalk5.setPosition(512, 200);
     tomato_stalk5.setRotation(-150);
     tomato_stalk5.setFillColor(sf::Color{0, 255, 0});
-
-
 
     // create the window
     sf::RenderWindow window(sf::VideoMode(1024, 768), "My window");
@@ -121,13 +136,16 @@ void Simulation::Interface::Init()
         window.clear(sf::Color::Black);
 
         
-        if (stalk_length < 85){
+        if (stalk_length < 85)
+        {
         window.draw(tomato_stalk);
-        }else if (stalk_length < 199){
+        }else if (stalk_length < 199)
+        {
         window.draw(tomato_stalk);
         window.draw(tomato_stalk2);
         window.draw(tomato_stalk3);
-        }else if (stalk_length < 301){
+        }else if (stalk_length < 301)
+        {
         window.draw(tomato_stalk);
         window.draw(tomato_stalk2);
         window.draw(tomato_stalk3);
