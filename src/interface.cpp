@@ -119,5 +119,9 @@ void Simulation::Interface::Init()
         // end the current frame
         window.display();
     }
+} 
+
+void Simulation::Controls::Simulate() {
+
 }
 
