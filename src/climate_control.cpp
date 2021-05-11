@@ -1,6 +1,6 @@
 #include <climate_control.h>
 
-
+// Compareing the temperature with the target temperature and adjust the fanspeed if the temperature is to high. :)
 void ClimateControl::controlclimate(HardstateOutput &control_output, SensorInput &control_input){
     
 
