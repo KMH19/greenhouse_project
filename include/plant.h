@@ -4,13 +4,13 @@
     {
 
     private:
-    double growth_rate;
+    double growth_rate_;
 
-    double target_temperature;
+    double target_temperature_;
 
-    double height;
+    double height_;
 
-    int stalks; 
+    int stalks_; 
 
     public:
 
@@ -23,17 +23,14 @@
     };
 
     Plant::plant_type getPlant() const;
-    void setType(Plant::plant_type v);
+    void setType(Plant::plant_type v, double growth_rate, double target_temperature);
 
-    double GetTargetTemperature() { return target_temperature; }
+    double GetTargetTemperature() { return target_temperature_; }
 
     void grow(int days);
 
     private:
     plant_type type_;
-
-    
-
     };
 
 

@@ -5,7 +5,7 @@
 
 #include "interface.h"
 
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 
 #include "imgui.h"
 #include "imgui-SFML.h"
@@ -89,19 +89,17 @@ void Simulation::Interface::Init()
         }
         if (ImGui::CollapsingHeader("Plant length"))
         {
-            if (ImGui::SliderFloat("Length", &stalk_length, 0., 300.)) 
+            if (ImGui::SliderFloat("Height", &stalk_length, 0., 300.)) 
         {
             tomato_stalk.setSize(sf::Vector2f{5.0, stalk_length});
         }
         }
-
-
         ImGui::End();
 
         // clear the window with black color
         window.clear(sf::Color::Black);
 
-
+        
         if (stalk_length < 85){
         window.draw(tomato_stalk);
         }else if (stalk_length < 199){
@@ -122,3 +120,4 @@ void Simulation::Interface::Init()
         window.display();
     }
 }
+
