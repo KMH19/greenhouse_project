@@ -9,6 +9,7 @@ private:
 bool auto_state_{true};
 
 public:
+
 void Automatic() 
 {
 }
@@ -32,5 +33,3 @@ void changeState(bool& i);
 
 
 };  // Class "ClimateControl" end
-
-
