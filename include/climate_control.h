@@ -1,6 +1,7 @@
 #pragma once
 #include <plant.h>
-
+#include <sensor_input.h>
+#include <hardstate_output.h>
 
 
 class ClimateControl
@@ -16,11 +17,9 @@ public:
     }
      ClimateControl(Plant& plant){
         target_temperature = plant.GetTargetTemperature();
-        
-
     }
     ~ClimateControl();
-    void controlclimate();
+    void controlclimate(HardstateOutput &control_output, SensorInput &control_input);
 };
 
 
