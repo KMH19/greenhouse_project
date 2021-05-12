@@ -75,7 +75,7 @@
 
         }else if (definitelyLessThan(a, b, epsilon) == true)
         {
-            
+
             std::cout << "temp < target" << std::endl;
             std::cout << fabs(b)-fabs(a) << std::endl;
             std::cout << (fabs(b)-fabs(a))*epsilon << std::endl;
@@ -91,6 +91,7 @@
 
     void ClimateControl::Manual()
     {
+        std::cout << "Manual control" << std::endl;
         return;
     }
 
