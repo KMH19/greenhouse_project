@@ -2,9 +2,9 @@
 #include <math.h>
 
 #include "climate_control.h"
-#include "sensor_input.h"
-#include "plant.h"
 
+
+    // Comparison of double values
     bool ClimateControl::approximatelyEqual(double a, double b, double epsilon)
     {
         return fabs(a - b) <= ( (fabs(a) < fabs(b) ? fabs(b) : fabs(a)) * epsilon);
@@ -57,11 +57,13 @@
             std::cout << fabs(a)-fabs(b) << std::endl;
             std::cout << (fabs(a)-fabs(b))*epsilon << std::endl;
 
+            // Linear function fan control
             double diff = fabs(a)-fabs(b);
-            double temp = pow(1.5, diff);
+            double temp = 10*diff;
             
             if (temp > 100)
             {
+
                 temp = 100;
                 
             }else{
@@ -71,7 +73,13 @@
 
             h.SetFanSpeed(temp);
 
+            // Correction of internal temperature
+            double internal_correction = fabs(a)*h.GetFanEfficiency();
+
+            //sim.setTemp_i(internal_correction);
+
             std::cout << "Fanspeed was set to: " << temp << '%' << std::endl;
+            //std::cout << "The internal temperature is: " << sim.getTemp_i() << '%' << std::endl;
 
         }else if (definitelyLessThan(a, b, epsilon) == true)
         {

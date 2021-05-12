@@ -2,7 +2,6 @@
 
 #include "hardstate_output.h"
 #include "sensor_input.h"
-#include "hardstate_output.h"
 #include "plant.h"
 
 class ClimateControl

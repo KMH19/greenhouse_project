@@ -7,17 +7,13 @@
 
 int main(int argc, char const *argv[])
 {
-    // Plant plant_entity;
-    // SensorInput sensor1;
-    // ClimateControl c;
-    // Simulation::Controls sim;
-
     Plant plant_entity;
     SensorInput sensor1;
     ClimateControl c;
     HardstateOutput h;
 
     Simulation::Controls sim;
+
 
     plant_entity.setType(Plant::cucumber_plant, 0.5, 20);
 

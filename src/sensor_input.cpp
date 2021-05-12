@@ -15,6 +15,8 @@ double SensorInput::getSoilHumidity(){
     return soil_humidity_-sensor_error[iRand];
 }
 
+
+
 void SensorInput::sensorRead(double &temperature, double &air_humidity, double &soil_humidity)
 {
     if (temperature == temperature_) return;

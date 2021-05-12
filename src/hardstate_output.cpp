@@ -25,7 +25,3 @@ void HardstateOutput::HardstateRead(double fan_current_speed, double watering_cu
     watering_speed_ = watering_current_speed;
     light_intensity_ = light_current_intensity;
 }
-
-double HardstateOutput::GetFanSpeed(){
-    return fan_speed_;
-}

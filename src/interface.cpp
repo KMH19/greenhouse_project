@@ -24,6 +24,24 @@
     bool water_c = false;
     bool light_c = false;
 
+    void Simulation::Controls::setTemp_i(double& temperature)
+    {
+        if (temperature == temperature_i) return;
+            temperature_i = temperature;
+    }
+
+    void Simulation::Controls::setAirHum_i(double& air_humidity)
+    {
+        if (air_humidity == air_humidity_i) return;
+            air_humidity_i = air_humidity;
+    }
+
+    void Simulation::Controls::setSoilHum_i(double& soil_humidity)
+    {
+        if (soil_humidity == soil_humidity_i) return;
+            soil_humidity_i = soil_humidity;
+    }
+
     void Simulation::Controls::SimulateOneDay(int days_, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h) 
     {
 
