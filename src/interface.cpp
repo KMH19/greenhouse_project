@@ -128,7 +128,7 @@
 void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
 {
 
-    sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, stalk_length}};
+    sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, p.getHeight()}};
     tomato_stalk.setPosition(512, 384);
     tomato_stalk.setRotation(180);
     tomato_stalk.setFillColor(sf::Color{0, 255, 0});
@@ -201,13 +201,13 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
             // Breakpoint KMH
 
         }
-        if (ImGui::CollapsingHeader("Plant length"))
-        {
-            if (ImGui::SliderFloat("Height", &stalk_length, 0., 300.)) 
-        {
-            tomato_stalk.setSize(sf::Vector2f{5.0, stalk_length});
-        }
-        }
+        // if (ImGui::CollapsingHeader("Plant length"))
+        // {
+        //     if (ImGui::SliderFloat("Height", &stalk_length, 0., 300.)) 
+        // {
+        //     tomato_stalk.setSize(sf::Vector2f{5.0, stalk_length});
+        // }
+        // }
         if (ImGui::CollapsingHeader("Simulation"))
         {
         ImGui::Text("Choose between one-day simulation or series below:");
@@ -283,15 +283,15 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         //     sim.SimulateOneDay(1, p, s, c, h, sim);
         // }
         
-        if (stalk_length < 85)
+        if (p.getHeight() < 85)
         {
         window.draw(tomato_stalk);
-        }else if (stalk_length < 199)
+        }else if (p.getHeight() < 199)
         {
         window.draw(tomato_stalk);
         window.draw(tomato_stalk2);
         window.draw(tomato_stalk3);
-        }else if (stalk_length < 301)
+        }else if (p.getHeight() < 301)
         {
         window.draw(tomato_stalk);
         window.draw(tomato_stalk2);

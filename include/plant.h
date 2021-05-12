@@ -8,7 +8,7 @@ class Plant : public plant_base
 
     double target_temperature_;
 
-    double height_{0.};
+    float height_{0.};
 
     int stalks_{10}; 
 
@@ -26,7 +26,7 @@ class Plant : public plant_base
 
     void reset()        override;
 
-    double getHeight() override { return height_; };
+    float getHeight() override { return height_; };
 
     Plant::plant_type getPlant() const;
 

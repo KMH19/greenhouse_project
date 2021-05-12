@@ -8,7 +8,7 @@ class plant_base
 private:
 
 public:
-virtual double getHeight() = 0;
+virtual float getHeight() = 0;
 virtual void grow(int days) = 0;
 virtual void reset() = 0;
 

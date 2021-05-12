@@ -7,8 +7,7 @@
 class ClimateControl
 {
 private:
-int auto_state_{true};
-int gui_switch{};
+bool auto_state_{true};
 
 
 public:
