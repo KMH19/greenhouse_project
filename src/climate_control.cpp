@@ -1,6 +1,8 @@
-#include <climate_control.h>
-#include "sensor_input.h"
 #include <iostream>
+
+#include "climate_control.h"
+#include "sensor_input.h"
+
 
 void ClimateControl::changeState(bool& i)
 {
@@ -10,7 +12,11 @@ void ClimateControl::changeState(bool& i)
 
 void ClimateControl::Automatic(SensorInput& s)
 {
+
     std::cout << "Sensor display: " << s.getTemperature() << "\370 C" << std::endl << std::endl;
+
+    
+
 }
 
 void ClimateControl::Manual()

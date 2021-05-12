@@ -19,7 +19,6 @@ public:
     double sensorDisp();
 
     void sensorRead(double &temperature, double &air_humidity, double &soil_humidity);
-
 };
 
 
