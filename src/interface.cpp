@@ -17,8 +17,6 @@
 #include "climate_control.h"
 #include "hardstate_output.h"
 
-    float stalk_length = 0.;
-
     bool fan_c = false;
     bool heating_c = false;
     bool water_c = false;
@@ -128,30 +126,76 @@
 void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
 {
 
+    sf::RectangleShape tube;
+    tube.setSize(sf::Vector2f(190, 700));
+    tube.setFillColor(sf::Color::Transparent);
+    tube.setOutlineColor(sf::Color::White);
+    tube.setOutlineThickness(5);
+    tube.setPosition(115, 15);
+
+    sf::RectangleShape glass;
+    glass.setSize(sf::Vector2f(180, 480));
+    glass.setFillColor(sf::Color::Transparent);
+    glass.setOutlineColor(sf::Color::White);
+    glass.setOutlineThickness(1);
+    glass.setPosition(120, 20);
+
+    sf::RectangleShape door;
+    door.setSize(sf::Vector2f(120, 160));
+    door.setFillColor(sf::Color::Transparent);
+    door.setOutlineColor(sf::Color::White);
+    door.setOutlineThickness(1);
+    door.setPosition(150, 530);
+
+    sf::CircleShape knob;
+    knob.setRadius(5);
+    knob.setFillColor(sf::Color::Transparent);
+    knob.setOutlineColor(sf::Color::White);
+    knob.setOutlineThickness(1);
+    knob.setPosition(255, 610);
+
+
+
+    sf::RectangleShape tube1 {sf::Vector2f{5.0, 200}};
+    tube1.setPosition(110, 10);
+    tube1.setRotation(-90);
+    
+    tube1.setFillColor(sf::Color{0, 255, 0});
+
     sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, p.getHeight()}};
-    tomato_stalk.setPosition(512, 384);
+    tomato_stalk.setPosition(210, 484);
     tomato_stalk.setRotation(180);
     tomato_stalk.setFillColor(sf::Color{0, 255, 0});
 
-    sf::RectangleShape tomato_stalk2 {sf::Vector2f{5.0, 75}};
-    tomato_stalk2.setPosition(512, 300);
+    sf::RectangleShape tomato_stalk2 {sf::Vector2f{3.0, 0}};
+    tomato_stalk2.setPosition(210, 400);
     tomato_stalk2.setRotation(150);
     tomato_stalk2.setFillColor(sf::Color{0, 255, 0});
 
-    sf::RectangleShape tomato_stalk3 {sf::Vector2f{5.0, 75}};
-    tomato_stalk3.setPosition(512, 300);
+    sf::RectangleShape tomato_stalk3 {sf::Vector2f{3.0, 0}};
+    tomato_stalk3.setPosition(210, 400);
     tomato_stalk3.setRotation(-150);
     tomato_stalk3.setFillColor(sf::Color{0, 255, 0});
 
-    sf::RectangleShape tomato_stalk4 {sf::Vector2f{5.0, 90}};
-    tomato_stalk4.setPosition(512, 200);
+    sf::RectangleShape tomato_stalk4 {sf::Vector2f{3.0, 0}};
+    tomato_stalk4.setPosition(210, 300);
     tomato_stalk4.setRotation(150);
     tomato_stalk4.setFillColor(sf::Color{0, 255, 0});
 
-    sf::RectangleShape tomato_stalk5 {sf::Vector2f{5.0, 100}};
-    tomato_stalk5.setPosition(512, 200);
+    sf::RectangleShape tomato_stalk5 {sf::Vector2f{3.0, 0}};
+    tomato_stalk5.setPosition(210, 300);
     tomato_stalk5.setRotation(-150);
     tomato_stalk5.setFillColor(sf::Color{0, 255, 0});
+
+    sf::RectangleShape tomato_stalk6 {sf::Vector2f{3.0, 0}};
+    tomato_stalk6.setPosition(210, 200);
+    tomato_stalk6.setRotation(150);
+    tomato_stalk6.setFillColor(sf::Color{0, 255, 0});
+
+    sf::RectangleShape tomato_stalk7 {sf::Vector2f{3.0, 0}};
+    tomato_stalk7.setPosition(210, 200);
+    tomato_stalk7.setRotation(-150);
+    tomato_stalk7.setFillColor(sf::Color{0, 255, 0});
 
     // create the window
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window");
@@ -278,27 +322,58 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         // clear the window with black color
         window.clear(sf::Color::Black);
 
-        // if (fan_c == true)
-        // {
-        //     sim.SimulateOneDay(1, p, s, c, h, sim);
-        // }
-        
+        window.draw(tube);
+        window.draw(glass);
+        window.draw(door);
+        window.draw(knob);
+
+
         if (p.getHeight() < 85)
         {
+        tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
         window.draw(tomato_stalk);
+        std::cout << p.getHeight() << std::endl;
         }else if (p.getHeight() < 199)
         {
+        tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
+        tomato_stalk2.setSize(sf::Vector2f{5.0, p.getHeight()-85});
+        tomato_stalk3.setSize(sf::Vector2f{5.0, p.getHeight()-85});
         window.draw(tomato_stalk);
         window.draw(tomato_stalk2);
         window.draw(tomato_stalk3);
-        }else if (p.getHeight() < 301)
+        }else if (p.getHeight() < 299)
         {
+        tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
+        tomato_stalk4.setSize(sf::Vector2f{5.0, p.getHeight()-199});
+        tomato_stalk5.setSize(sf::Vector2f{5.0, p.getHeight()-199});
         window.draw(tomato_stalk);
         window.draw(tomato_stalk2);
         window.draw(tomato_stalk3);
         window.draw(tomato_stalk4);
         window.draw(tomato_stalk5);
+        }else if (p.getHeight() < 399)
+        {
+        tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
+        tomato_stalk6.setSize(sf::Vector2f{5.0, p.getHeight()-299});
+        tomato_stalk7.setSize(sf::Vector2f{5.0, p.getHeight()-299});
+        window.draw(tomato_stalk);
+        window.draw(tomato_stalk2);
+        window.draw(tomato_stalk3);
+        window.draw(tomato_stalk4);
+        window.draw(tomato_stalk5);
+        window.draw(tomato_stalk6);
+        window.draw(tomato_stalk7);
+        }else{
+        window.draw(tomato_stalk);
+        window.draw(tomato_stalk2);
+        window.draw(tomato_stalk3);
+        window.draw(tomato_stalk4);
+        window.draw(tomato_stalk5);
+        window.draw(tomato_stalk6);
+        window.draw(tomato_stalk7);
         }
+
+        //450
 
         ImGui::SFML::Render(window);
 

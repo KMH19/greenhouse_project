@@ -10,8 +10,6 @@ class Plant : public plant_base
 
     float height_{0.};
 
-    int stalks_{10}; 
-
     public:
 
     enum plant_type 
