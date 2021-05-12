@@ -74,7 +74,7 @@
 
             h.SetFanSpeed(temp);
 
-            // Correction of internal temperature
+            // Correction of internal temperature according to fan efficiency
             internal_correction = fabs(b)*h.GetFanEfficiency();
 
             std::cout << "Fanspeed was set to: " << temp << '%' << std::endl;

@@ -3,7 +3,7 @@
 class HardstateOutput
 {
 private:
-    double fan_efficiency_{0.95};
+    double fan_efficiency_{0.98};
 
     double fan_speed_;
     double watering_speed_;
