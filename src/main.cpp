@@ -15,14 +15,15 @@ int main(int argc, char const *argv[])
     Plant plant_entity;
     SensorInput sensor1;
     ClimateControl c;
+    HardstateOutput h;
 
     Simulation::Controls sim;
 
-    plant_entity.setType(Plant::cucumber_plant, 0.5, 25);
+    plant_entity.setType(Plant::cucumber_plant, 0.5, 20);
 
     std::cout << "Current plant: " << plant_entity.getPlant() << std::endl;
 
-    sim.SimulateOneDay(10, plant_entity, sensor1, c);
+    sim.SimulateOneDay(10, plant_entity, sensor1, c, h);
 
     Simulation::Interface gui;
     gui.Init();

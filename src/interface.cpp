@@ -15,6 +15,7 @@
 #include "plant.h"
 #include "sensor_input.h"
 #include "climate_control.h"
+#include "hardstate_output.h"
 
     float stalk_length = 0.;
 
@@ -23,7 +24,7 @@
     bool water_c = false;
     bool light_c = false;
 
-    void Simulation::Controls::SimulateOneDay(int days_, Plant& p, SensorInput& s, ClimateControl& c) 
+    void Simulation::Controls::SimulateOneDay(int days_, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h) 
     {
 
     using namespace std::chrono_literals;
@@ -39,7 +40,7 @@
         // This tells the current air humidity (Polynomial factor)
         air_humidity_c = 0.1*pow(x,2)+10;
 
-        // This tells the current soil humidity, based on atmospheric temperature and humidity
+        // This tells the current soil humidity, based on atmospheric temperature and humidity (Polynomial factor)
         soil_humidity_c = 0.005*pow(x,2);
       
         s.sensorRead(temp_sim_c[i], air_humidity_c, soil_humidity_c);   
@@ -54,12 +55,12 @@
         
         if (c.checkAutoState() == true)
         {
-            c.Automatic(s);
+            c.Automatic(s, p, h);
 
         }else{
 
             c.Manual();
-            
+
         }
         
         std::this_thread::sleep_for(2s);

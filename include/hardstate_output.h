@@ -3,14 +3,14 @@
 class HardstateOutput
 {
 private:
-    double fan_speed;
-    double watering_speed;
-    double light_intensity;
+    double fan_speed_;
+    double watering_speed_;
+    double light_intensity_;
     
 public:
-    void SetFanSpeed(double fan_speed_1);
-    void SetWateringSpeed(double set_watering_speed);
-    void SetLightIntensity(double set_light_intensity);
+    void SetFanSpeed(double& set_fan_speed);
+    void SetWateringSpeed(double& set_watering_speed);
+    void SetLightIntensity(double& set_light_intensity);
 
     double GetFanSpeed();
 
