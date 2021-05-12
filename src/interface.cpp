@@ -42,7 +42,7 @@
             soil_humidity_i = soil_humidity;
     }
 
-    void Simulation::Controls::SimulateOneDay(int days_, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h) 
+    void Simulation::Controls::SimulateOneDay(int days_, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
     {
 
     using namespace std::chrono_literals;
@@ -73,8 +73,21 @@
         
         if (c.checkAutoState() == true)
         {
-            c.Automatic(s, p, h);
+            double internal_correction = c.Automatic(s, p, h);
 
+            if (c.approximatelyEqual(0, internal_correction, 0.05))
+            {
+
+                std::cout << "Internal temperature was not corrected (0)" << std::endl << std::endl; 
+
+            }else{
+
+                sim.setTemp_i(internal_correction);
+
+                std::cout << "Internal temperature was corrected to: " << internal_correction << std::endl << std::endl; 
+                
+            }
+            
         }else{
 
             c.Manual();

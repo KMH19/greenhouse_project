@@ -12,7 +12,7 @@ bool auto_state_{true};
 
 public:
 
-void Automatic(SensorInput& s, Plant& p, HardstateOutput& h);
+double Automatic(SensorInput& s, Plant& p, HardstateOutput& h);
 
 void Manual();
 

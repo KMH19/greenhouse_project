@@ -39,7 +39,7 @@ bool getWater()   { return water_c;   };
 bool getLight()   { return light_c;   };
 bool getHeating() { return heating_c; };
 
-void SimulateOneDay(int days, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h);
+void SimulateOneDay(int days, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim);
 
 double getTemp_c()      { return temperature_c;   };
 double getAirHum_c()    { return air_humidity_c;  };

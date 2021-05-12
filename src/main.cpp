@@ -15,11 +15,11 @@ int main(int argc, char const *argv[])
     Simulation::Controls sim;
 
 
-    plant_entity.setType(Plant::cucumber_plant, 0.5, 20);
+    plant_entity.setType(Plant::cucumber_plant, 0.5, 15);
 
     std::cout << "Current plant: " << plant_entity.getPlant() << std::endl;
 
-    sim.SimulateOneDay(10, plant_entity, sensor1, c, h);
+    sim.SimulateOneDay(10, plant_entity, sensor1, c, h, sim);
 
     Simulation::Interface gui;
     gui.Init();

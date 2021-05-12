@@ -31,7 +31,7 @@
         auto_state_ = i;
     }
 
-    void ClimateControl::Automatic(SensorInput& s, Plant& p, HardstateOutput& h)
+    double ClimateControl::Automatic(SensorInput& s, Plant& p, HardstateOutput& h)
     {
 
         std::cout << "Sensor display: " << s.getTemperature() << "\370 C" << std::endl << std::endl;
@@ -41,6 +41,7 @@
         double a = s.getTemperature();
         double b = p.GetTargetTemperature();
         double epsilon = 0.05;
+        double internal_correction;
 
         std::cout << essentiallyEqual(a, b, epsilon) << std::endl;
         std::cout << approximatelyEqual(a, b, epsilon) << std::endl;
@@ -49,7 +50,7 @@
 
         if (essentiallyEqual(a, b, epsilon) == true || approximatelyEqual(a, b, epsilon) == true)
         {
-            return;
+            internal_correction = 0.;
 
         }else if (definitelyGreaterThan(a, b, epsilon) == true)
         {
@@ -74,12 +75,9 @@
             h.SetFanSpeed(temp);
 
             // Correction of internal temperature
-            double internal_correction = fabs(a)*h.GetFanEfficiency();
-
-            //sim.setTemp_i(internal_correction);
+            internal_correction = fabs(b)*h.GetFanEfficiency();
 
             std::cout << "Fanspeed was set to: " << temp << '%' << std::endl;
-            //std::cout << "The internal temperature is: " << sim.getTemp_i() << '%' << std::endl;
 
         }else if (definitelyLessThan(a, b, epsilon) == true)
         {
@@ -93,7 +91,11 @@
 
             std::cout << "Fanspeed was set to: " << temp << '%' << std::endl;
 
+            // Heating could be added here (Not considered at this point)
+            internal_correction = a;
+
         }
+        return internal_correction;
     }
 
 
@@ -102,19 +104,6 @@
         std::cout << "Manual control" << std::endl;
         return;
     }
-
-//double& temperature, double& air_humidity, double& soil_humidity
-
-// void ClimateControl::controlclimate(HardstateOutput &control_output, SensorInput &control_input){    
-//     double temperary_temperture = control_input.getTemperature();
-//     if(temperary_temperture > target_temperature){
-//         control_output.SetFanSpeed(100);
-//     }
-//     else{
-//         control_output.SetFanSpeed(0);
-//     }
-
-// }
 
 // Ambition with software:
 // Temperature
