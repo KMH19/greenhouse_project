@@ -18,6 +18,9 @@ bool water_c{false};
 bool light_c{false};
 bool heating_c{false};
 
+int current_day_{0};
+// int sim_days_{0};
+
 // Global temperature -> Fan speed -> Difference -> Local temperature
 // Temperature outside the greenhouse
 double temperature_c{20};
@@ -34,12 +37,15 @@ double x;
 std::vector<double> temp_sim_c = {15.4, 15.6, 17, 18, 20, 21, 25, 20, 20, 21, 25, 20, 15.4, 15.6, 17, 18, 15.4, 15.6, 17, 18};
 
 public:
-bool getFan()     { return fan_c;     };
-bool getWater()   { return water_c;   };
-bool getLight()   { return light_c;   };
-bool getHeating() { return heating_c; };
+int SimDays{1};
 
-void SimulateOneDay(int days, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim);
+bool getFan()           { return fan_c;           };
+bool getWater()         { return water_c;         };
+bool getLight()         { return light_c;         };
+bool getHeating()       { return heating_c;       };
+
+void SimulateDays(int days, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim);
+void Simulate(int i, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim);
 
 double getTemp_c()      { return temperature_c;   };
 double getAirHum_c()    { return air_humidity_c;  };
@@ -53,6 +59,13 @@ void setTemp_i(double& temperature);
 void setAirHum_i(double& air_humidity);
 void setSoilHum_i(double& soil_humidity);
 
+// int setSimDays(int &d);
+// int getSimDays()        { return sim_days_;       };
+void setDay(int &d);
+void resetDay();
+int getDay()            { return current_day_;    };
+
+
 };  // Class "Interface" end
 
 class Interface
@@ -60,7 +73,7 @@ class Interface
 private:
 
 public:
-void Init(); 
+void Init(Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim); 
 
 };
 }   // Namespace "Simulation" end

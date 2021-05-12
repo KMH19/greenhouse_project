@@ -20,4 +20,7 @@
         height_ = height_ + days * growth_rate_;
     }
 
+    void Plant::reset() {
+        height_ = 0.;
+    }
     

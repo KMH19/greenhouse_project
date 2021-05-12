@@ -42,13 +42,19 @@
             soil_humidity_i = soil_humidity;
     }
 
-    void Simulation::Controls::SimulateOneDay(int days_, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
+    void Simulation::Controls::setDay(int &d)
     {
+        d = current_day_;
+    }
 
-    using namespace std::chrono_literals;
-    for (int i = 0; i < days_; i++)
+        void Simulation::Controls::resetDay()
     {
-        std::cout << "Day no.: " << 1+i << std::endl;
+        current_day_ = 0;
+    }
+
+    void Simulation::Controls::Simulate(int i, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim)
+    {
+        std::cout << "Day no.: " << sim.getDay() << std::endl;
         std::cout << "-----------------------" << std::endl << std::endl;
 
         p.grow(1);
@@ -60,7 +66,7 @@
 
         // This tells the current soil humidity, based on atmospheric temperature and humidity (Polynomial factor)
         soil_humidity_c = 0.005*pow(x,2);
-      
+
         s.sensorRead(temp_sim_c[i], air_humidity_c, soil_humidity_c);   
 
         std::cout << "Plant height: " << p.getHeight() << std::endl << std::endl;
@@ -85,7 +91,7 @@
                 sim.setTemp_i(internal_correction);
 
                 std::cout << "Internal temperature was corrected to: " << internal_correction << std::endl << std::endl; 
-                
+
             }
             
         }else{
@@ -93,13 +99,35 @@
             c.Manual();
 
         }
-        
-        std::this_thread::sleep_for(2s);
     }
-}
 
-void Simulation::Interface::Init() 
+    void Simulation::Controls::SimulateDays(int days_, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
+    {
+
+        if (days_ == 1) {
+
+            current_day_ += 1;
+            int iRand = rand() % 19;
+            sim.Simulate(iRand, p, s, c, h, sim);
+
+        }else{
+            current_day_ += days_;
+
+            for (int i = 0; i < days_; i++)
+            {
+                sim.Simulate(i, p, s, c, h, sim);
+            }
+
+            std::cout << sim.SimDays << std::endl << std::endl;
+            std::cout << days_ << std::endl << std::endl;
+            std::cout << current_day_ << std::endl;
+        }
+
+    }
+
+void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
 {
+
     sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, stalk_length}};
     tomato_stalk.setPosition(512, 384);
     tomato_stalk.setRotation(180);
@@ -126,7 +154,7 @@ void Simulation::Interface::Init()
     tomato_stalk5.setFillColor(sf::Color{0, 255, 0});
 
     // create the window
-    sf::RenderWindow window(sf::VideoMode(1024, 768), "My window");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window");
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
@@ -153,6 +181,87 @@ void Simulation::Interface::Init()
             ImGui::BulletText("Use the hardstates windows to turn fan, heating, watering or light (on/off), \n");
             ImGui::Separator();
         }
+        if (ImGui::CollapsingHeader("Control"))
+        {
+        static bool e = true;
+        if (ImGui::RadioButton("Manual", e==false)) 
+            { 
+            e = false;
+            c.changeState(e); 
+            }
+
+        ImGui::SameLine();
+
+        if (ImGui::RadioButton("Automatic", e==true)) 
+            {
+            e = true; 
+            c.changeState(e); 
+            }
+
+            // Breakpoint KMH
+
+        }
+        if (ImGui::CollapsingHeader("Plant length"))
+        {
+            if (ImGui::SliderFloat("Height", &stalk_length, 0., 300.)) 
+        {
+            tomato_stalk.setSize(sf::Vector2f{5.0, stalk_length});
+        }
+        }
+        if (ImGui::CollapsingHeader("Simulation"))
+        {
+        ImGui::Text("Choose between one-day simulation or series below:");
+        ImGui::Separator();
+        ImGui::Text("The current day is: %i", sim.getDay());
+        ImGui::Separator();
+        if (ImGui::TreeNode("One day"))
+        {
+        if (ImGui::Button("Simulate"))
+        {
+            sim.SimulateDays(1, p, s, c, h, sim);
+        }
+        ImGui::SameLine();
+
+        ImGui::PushID(3);
+        ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(7.0f, 0.6f, 0.6f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(7.0f, 0.7f, 0.7f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
+        if (ImGui::Button("Reset plant / time"))
+        {
+            p.reset();
+            sim.resetDay();
+        }
+        ImGui::PopStyleColor(3);
+        ImGui::PopID();
+
+        ImGui::TreePop();
+        }
+        if (ImGui::TreeNode("Several days"))
+        {
+        if (ImGui::SliderInt("Days", &sim.SimDays, 1, 20)) {}
+
+            if (ImGui::Button("Simulate"))
+            {
+                sim.SimulateDays(sim.SimDays, p, s, c, h, sim);
+            }
+
+            ImGui::SameLine();
+
+            ImGui::PushID(4);
+            ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(7.0f, 0.6f, 0.6f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(7.0f, 0.7f, 0.7f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
+            if (ImGui::Button("Reset plant / time"))
+            {
+                p.reset();
+                sim.resetDay();
+            }
+            ImGui::PopStyleColor(3);
+            ImGui::PopID();
+
+        ImGui::TreePop();
+        }
+        }
         if (ImGui::CollapsingHeader("Hardstates"))
         {
             if (ImGui::BeginTable("split", 4))
@@ -164,18 +273,15 @@ void Simulation::Interface::Init()
                 ImGui::EndTable();
             }
         }
-        if (ImGui::CollapsingHeader("Plant length"))
-        {
-            if (ImGui::SliderFloat("Height", &stalk_length, 0., 300.)) 
-        {
-            tomato_stalk.setSize(sf::Vector2f{5.0, stalk_length});
-        }
-        }
         ImGui::End();
 
         // clear the window with black color
         window.clear(sf::Color::Black);
 
+        // if (fan_c == true)
+        // {
+        //     sim.SimulateOneDay(1, p, s, c, h, sim);
+        // }
         
         if (stalk_length < 85)
         {

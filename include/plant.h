@@ -8,7 +8,7 @@ class Plant : public plant_base
 
     double target_temperature_;
 
-    double height_{0};
+    double height_{0.};
 
     int stalks_{10}; 
 
@@ -24,9 +24,12 @@ class Plant : public plant_base
 
     void grow(int days) override;
 
+    void reset()        override;
+
     double getHeight() override { return height_; };
 
     Plant::plant_type getPlant() const;
+
     void setType(Plant::plant_type v, double growth_rate, double target_temperature);
 
     double GetTargetTemperature() { return target_temperature_; }
