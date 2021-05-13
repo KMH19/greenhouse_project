@@ -209,11 +209,13 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
         ImGui::SFML::Update(window, deltaClock.restart());
         ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
-        ImGui::Begin("Menu");
+        ImGui::Begin("Greenhouse Simulation");
         if (ImGui::CollapsingHeader("Help"))
         {
             ImGui::Text("USAGE:");
-            ImGui::BulletText("Use the hardstates windows to turn fan, heating, watering or light (on/off), \n");
+            ImGui::BulletText("Select a plant of choice in plant attributes tab, \n");
+            ImGui::BulletText("Change between automatic and manual control in the control tab, \n");
+            ImGui::BulletText("For simulation of one day or several day use the simulation tab, \n");
             ImGui::Separator();
         }
 
@@ -225,7 +227,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         ImGui::Text("The current plant is: %i", p.getPlant());
 
         static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
-        ImGui::Combo("Combo", &plant, "0. Cactus plant\0 1. Tomato plant\0 2. Cucumber plant\0 3. Paradise tree\0\0");    
+        ImGui::Combo("Selection", &plant, " 0. Cactus plant\0 1. Tomato plant\0 2. Cucumber plant\0 3. Paradise tree\0\0");    
         if (ImGui::Button("Select plant"))
         {
             ImGui::OpenPopup("Select plant");
@@ -428,20 +430,14 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         ImGui::TreePop();
         }
         }
-
-
-        // if (ImGui::CollapsingHeader("Hardstates",fan))
-        // {
-        //     if (ImGui::BeginTable("split", 4))
-        //     {
-        //         ImGui::TableNextColumn(); ImGui::Checkbox("Fan",        &fan);
-        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Heating",    &heating_c);
-        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Watering",   &water_c);
-        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Light",      &light_c);
-        //         ImGui::EndTable();
-        //     }
-        // }
         ImGui::End();
+
+        ImGui::Begin("Data Display");
+        ImGui::Text("LOL");
+        ImGui::End();
+
+
+
 
         // clear the window with black color
         window.clear(sf::Color::Black);
