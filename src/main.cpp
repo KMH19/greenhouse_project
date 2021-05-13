@@ -15,7 +15,7 @@ int main(int argc, char const *argv[])
     Simulation::Controls sim;
     Simulation::Interface gui;
 
-    plant_entity.setType(Plant::cucumber_plant, 0.5, 15);
+    plant_entity.setType(Plant::cucumber_plant, 2, 15);
 
     std::cout << "Current plant: " << plant_entity.getPlant() << std::endl;
     

@@ -191,7 +191,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     tomato_stalk7.setFillColor(sf::Color{0, 255, 0});
 
     // create the window
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Pipe simulator");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window");
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
@@ -221,10 +221,13 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
         if (ImGui::CollapsingHeader("Plant attributes"))
         {
-        ImGui::Text("The current plant is: %i", p.getPlant());
+
         static int plant = 0;
+
+        ImGui::Text("The current plant is: %i", p.getPlant());
+
         static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
-        ImGui::Combo("Combo", &plant, "Cactus plant\0Tomato plant\0Chili plant\0Paradise tree\0\0");    
+        ImGui::Combo("Combo", &plant, "0. Cactus plant\0 1. Tomato plant\0 2. Cucumber plant\0 3. Paradise tree\0\0");    
         std::cout << plant << std::endl;
         if (ImGui::Button("Select plant"))
         {
@@ -243,16 +246,25 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
             if (ImGui::Button("OK", ImVec2(120, 0))) 
             { 
-                ImGui::CloseCurrentPopup();
                 p.reset();
                 sim.resetDay(); 
 
                 if (plant == 0)
-                p.setType(Plant::cucumber_plant, 0.5, 15);
+                {
+                p.setType(Plant::cactus_plant, 2, 15);
                 }else if (plant == 1)
                 {
-                    
+                p.setType(Plant::tomato_plant, 4, 15);
+                }else if (plant == 2)
+                {
+                p.setType(Plant::cucumber_plant, 4, 15);
+                }else if (plant == 3)
+                {
+                p.setType(Plant::paradise_tree, 1, 15);
                 } 
+
+                ImGui::CloseCurrentPopup();
+            }
 
             ImGui::SetItemDefaultFocus();
             ImGui::SameLine();
