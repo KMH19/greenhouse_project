@@ -219,80 +219,6 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
             ImGui::Separator();
         }
 
-        if (ImGui::CollapsingHeader("Plant attributes"))
-        {
-        if (ImGui::TreeNode("Plant selector"))
-        {
-        ImGui::TextWrapped("Choose from the available options below");
-
-        if (ImGui::Button("Clear plant selection"))
-            ImGui::OpenPopup("Clear?");
-
-        // Always center this window when appearing
-        ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-        ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
-
-        if (ImGui::BeginPopupModal("Clear?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-        {
-            ImGui::Text("Are you sure that you want to clear the current plant?\nThis operation cannot be undone!\n\n");
-            ImGui::Separator();
-
-            static bool dont_ask_me_next_time = false;
-            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-            ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
-            ImGui::PopStyleVar();
-
-            if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-            ImGui::SetItemDefaultFocus();
-            ImGui::SameLine();
-            if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
-            ImGui::EndPopup();
-        }
-
-        if (ImGui::Button("Select plant"))
-            ImGui::OpenPopup("Plant selection");
-        if (ImGui::BeginPopupModal("Plant selection", NULL, ImGuiWindowFlags_MenuBar))
-        {
-        if (ImGui::BeginMenuBar())
-        {
-            if (ImGui::BeginMenu("File"))
-            {
-                if (ImGui::MenuItem("Close")) {}
-                ImGui::EndMenu();
-            }
-            ImGui::EndMenuBar();
-        }
-        ImGui::Text("This is where the current plant is selected\nRemember to set the initial height of the plant.");
-
-        // Testing behavior of widgets stacking their own regular popups over the modal.
-        static int item = 1;
-        static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
-        ImGui::Combo("Combo", &item, "Cucumber\0Tomato\0Chili\0\0");
-
-        if (ImGui::Button("Select plant size"))
-            ImGui::OpenPopup("Plant size");
-
-        // Also demonstrate passing a bool* to BeginPopupModal(), this will create a regular close button which
-        // will close the popup. Note that the visibility state of popups is owned by imgui, so the input value
-        // of the bool actually doesn't matter here.
-        bool unused_open = true;
-        if (ImGui::BeginPopupModal("Plant size", &unused_open))
-        {
-            ImGui::Text("The initial plant size is set here");
-            if (ImGui::Button("Close"))
-                ImGui::CloseCurrentPopup();
-            ImGui::EndPopup();
-        }
-
-        if (ImGui::Button("Close"))
-            ImGui::CloseCurrentPopup();
-        ImGui::EndPopup();
-        }
-
-        ImGui::TreePop();
-        }
-        }
-
 
         if (ImGui::CollapsingHeader("Control"))
         {
@@ -350,6 +276,9 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         }
         }
 
+        ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+        ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
         if (ImGui::CollapsingHeader("Simulation"))
         {
         ImGui::Text("Choose between one-day simulation or series below:");
@@ -369,10 +298,34 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(7.0f, 0.7f, 0.7f));
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
         if (ImGui::Button("Reset plant / time"))
+        ImGui::OpenPopup("Reset plant/time?");
+
+        if (ImGui::BeginPopupModal("Reset plant/time?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
         {
-            p.reset();
-            sim.resetDay();
+            ImGui::Text("Are you sure that you want to clear the current plant and reset time?\nThis operation cannot be undone!\n\n");
+            ImGui::Separator();
+
+            static bool dont_ask_me_next_time = false;
+            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+            ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+            ImGui::PopStyleVar();
+
+            if (ImGui::Button("OK", ImVec2(120, 0))) 
+            { 
+                ImGui::CloseCurrentPopup();
+                p.reset();
+                sim.resetDay(); 
+            }
+            ImGui::SetItemDefaultFocus();
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            ImGui::EndPopup();
         }
+        
+        // {
+        //     p.reset();
+        //     sim.resetDay();
+        // }
         ImGui::PopStyleColor(3);
         ImGui::PopID();
 
@@ -394,10 +347,30 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(7.0f, 0.7f, 0.7f));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
             if (ImGui::Button("Reset plant / time"))
+            ImGui::OpenPopup("Reset plant/time?");
+
+            if (ImGui::BeginPopupModal("Reset plant/time?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
             {
-                p.reset();
-                sim.resetDay();
+                ImGui::Text("Are you sure that you want to clear the current plant and reset time?\nThis operation cannot be undone!\n\n");
+                ImGui::Separator();
+
+                static bool dont_ask_me_next_time = false;
+                ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+                ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+                ImGui::PopStyleVar();
+
+                if (ImGui::Button("OK", ImVec2(120, 0))) 
+                { 
+                    ImGui::CloseCurrentPopup();
+                    p.reset();
+                    sim.resetDay(); 
+                }
+                ImGui::SetItemDefaultFocus();
+                ImGui::SameLine();
+                if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+                ImGui::EndPopup();
             }
+
             ImGui::PopStyleColor(3);
             ImGui::PopID();
 
