@@ -7,7 +7,7 @@
 #include "interface.h"
 
 #include "SFML/Graphics.hpp"
-
+#include "SFML/Graphics/Color.hpp"
 #include "imgui.h"
 #include "imgui-SFML.h"
 
@@ -132,7 +132,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     glass.setOutlineColor(sf::Color::White);
     glass.setOutlineThickness(1);
     glass.setPosition(120, 20);
-// Compost door knob 
+// Compost door  
     sf::RectangleShape door;
     door.setSize(sf::Vector2f(120, 160));
     door.setFillColor(sf::Color::Transparent);
@@ -146,6 +146,63 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     knob.setOutlineColor(sf::Color::White);
     knob.setOutlineThickness(1);
     knob.setPosition(255, 610);
+//Koordinat system, skal ud kommenteres 
+    sf::CircleShape origo;
+    origo.setRadius(1);
+    origo.setFillColor(sf::Color::Yellow);
+    origo.setOutlineColor(sf::Color::Yellow);
+    origo.setOutlineThickness(5);
+    origo.setPosition(0, 0);
+//højre øverste hjørne
+    sf::CircleShape høh;
+    høh.setRadius(1);
+    høh.setFillColor(sf::Color::Yellow);
+    høh.setOutlineColor(sf::Color::Yellow);
+    høh.setOutlineThickness(5);
+    høh.setPosition(1918, 0);
+//nedereste højre hjørne 
+    sf::CircleShape nhh;
+    nhh.setRadius(1);
+    nhh.setFillColor(sf::Color::Yellow);
+    nhh.setOutlineColor(sf::Color::Yellow);
+    nhh.setOutlineThickness(5);
+    nhh.setPosition(1918, 1070);
+//nedereste venstre hjørne 
+    sf::CircleShape nvh;
+    nvh.setRadius(1);
+    nvh.setFillColor(sf::Color::Yellow);
+    nvh.setOutlineColor(sf::Color::Yellow);
+    nvh.setOutlineThickness(5);
+    nvh.setPosition(0, 1070);
+//midten 
+    sf::CircleShape midten;
+    midten.setRadius(1);
+    midten.setFillColor(sf::Color::Yellow);
+    midten.setOutlineColor(sf::Color::Yellow);
+    midten.setOutlineThickness(5);
+    midten.setPosition(960, 540);
+
+//Baggrund til gulvet 
+sf::RectangleShape gulv;
+    gulv.setSize(sf::Vector2f(1920,500));
+    gulv.setFillColor(sf::Color{240, 185, 137});
+    gulv.setOutlineColor(sf::Color{240, 185, 137});
+    gulv.setOutlineThickness(1);
+    gulv.setPosition(0, 720);
+//Bræder 
+
+// for (int i = 0; i < 4; i++)
+// {
+    sf::RectangleShape streg;
+    streg.setSize(sf::Vector2f(1920,2.5));
+    streg.setFillColor(sf::Color{0, 0, 0});
+    streg.setOutlineColor(sf::Color{240, 185, 137});
+    streg.setOutlineThickness(1);
+    streg.setPosition(0, 750);
+// }
+  
+ 
+
 
     sf::RectangleShape tube1 {sf::Vector2f{5.0, 200}};
     tube1.setPosition(110, 10);
@@ -505,7 +562,14 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         window.draw(glass);
         window.draw(door);
         window.draw(knob);
-
+        window.draw(origo);
+        window.draw(høh);
+        window.draw(nhh);
+        window.draw(nvh);
+        window.draw(midten);
+        window.draw(gulv);
+        window.draw(streg);
+       
 
         if (p.getHeight() < 85)
         {
