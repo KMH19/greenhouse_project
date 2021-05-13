@@ -111,9 +111,6 @@
                 sim.Simulate(i, p, s, c, h, sim);
             }
 
-            std::cout << sim.SimDays << std::endl << std::endl;
-            std::cout << days_ << std::endl << std::endl;
-            std::cout << current_day_ << std::endl;
         }
 
     }
@@ -193,6 +190,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
     // create the window
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Greenhouse simulator");
+
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
@@ -212,21 +210,25 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
         ImGui::SFML::Update(window, deltaClock.restart());
         ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
-        ImGui::Begin("Menu");
+        ImGui::Begin("Greenhouse Simulation");
         if (ImGui::CollapsingHeader("Help"))
         {
             ImGui::Text("USAGE:");
-            ImGui::BulletText("Use the hardstates windows to turn fan, heating, watering or light (on/off), \n");
+            ImGui::BulletText("Select a plant of choice in plant attributes tab, \n");
+            ImGui::BulletText("Change between automatic and manual control in the control tab, \n");
+            ImGui::BulletText("For simulation of one day or several day use the simulation tab, \n");
             ImGui::Separator();
         }
 
         if (ImGui::CollapsingHeader("Plant attributes"))
         {
-        ImGui::Text("The current plant is: %i", p.getPlant());
+
         static int plant = 0;
+
+        ImGui::Text("The current plant is: %i", p.getPlant());
+
         static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
-        ImGui::Combo("Combo", &plant, "Cactus plant\0Tomato plant\0Chili plant\0Paradise tree\0\0");    
-        std::cout << plant << std::endl;
+        ImGui::Combo("Selection", &plant, " 0. Cactus plant\0 1. Tomato plant\0 2. Cucumber plant\0 3. Paradise tree\0\0");    
         if (ImGui::Button("Select plant"))
         {
             ImGui::OpenPopup("Select plant");
@@ -244,16 +246,25 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
             if (ImGui::Button("OK", ImVec2(120, 0))) 
             { 
-                ImGui::CloseCurrentPopup();
                 p.reset();
                 sim.resetDay(); 
 
                 if (plant == 0)
-                p.setType(Plant::cucumber_plant, 0.5, 15);
+                {
+                p.setType(Plant::cactus_plant, 2, 15);
                 }else if (plant == 1)
                 {
-                    
+                p.setType(Plant::tomato_plant, 4, 15);
+                }else if (plant == 2)
+                {
+                p.setType(Plant::cucumber_plant, 4, 15);
+                }else if (plant == 3)
+                {
+                p.setType(Plant::paradise_tree, 1, 15);
                 } 
+
+                ImGui::CloseCurrentPopup();
+            }
 
             ImGui::SetItemDefaultFocus();
             ImGui::SameLine();
@@ -420,20 +431,14 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         ImGui::TreePop();
         }
         }
-
-
-        // if (ImGui::CollapsingHeader("Hardstates",fan))
-        // {
-        //     if (ImGui::BeginTable("split", 4))
-        //     {
-        //         ImGui::TableNextColumn(); ImGui::Checkbox("Fan",        &fan);
-        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Heating",    &heating_c);
-        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Watering",   &water_c);
-        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Light",      &light_c);
-        //         ImGui::EndTable();
-        //     }
-        // }
         ImGui::End();
+
+        ImGui::Begin("Data Display");
+        ImGui::Text("LOL");
+        ImGui::End();
+
+
+
 
         // clear the window with black color
         window.clear(sf::Color::Black);
