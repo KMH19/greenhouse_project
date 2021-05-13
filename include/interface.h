@@ -13,7 +13,7 @@ namespace Simulation
 class Controls
 {
 private:
-bool fan_c{false};
+bool fan_c{true};
 bool water_c{false};
 bool light_c{false};
 bool heating_c{false};
