@@ -37,6 +37,8 @@ double x;
 std::vector<double> temp_sim_c = {15.4, 15.6, 17, 18, 20, 21, 25, 20, 20, 21, 25, 20, 15.4, 15.6, 17, 18, 15.4, 15.6, 17, 18};
 
 public:
+bool first_popup{true};
+
 int SimDays{1};
 
 bool getFan()           { return fan_c;           };

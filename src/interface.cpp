@@ -219,13 +219,35 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         ImGui::SFML::Update(window, deltaClock.restart());
         ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
         ImGui::Begin("Greenhouse Simulation");
+
+        if (sim.first_popup == true){
+        ImGui::OpenPopup("Hello");
+
+        if (ImGui::BeginPopupModal("Hello", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("Welcome to the greenhouse simulation of the tube\n\nPlease simulate one day before referring to the data display window!\n\nPlease, refer to the help section if needed.");
+            ImGui::Separator();
+
+            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+            ImGui::PopStyleVar();
+
+            if (ImGui::Button("OK", ImVec2(120, 0))) 
+            { 
+                ImGui::CloseCurrentPopup();
+                sim.first_popup = false;
+            }
+            ImGui::EndPopup();
+        }
+        }
+
+
         if (ImGui::CollapsingHeader("Help"))
         {
             ImGui::Text("USAGE:");
             ImGui::BulletText("Select a plant of choice in plant attributes tab, \n");
             ImGui::BulletText("Change between automatic and manual control in the control tab, \n");
             ImGui::BulletText("For simulation of one day or several day use the simulation tab, \n");
-            ImGui::BulletText("The second window shows the data display window, \n");
+            ImGui::BulletText("The second window shows the data display window, please simulate one day before referring to this \n");
             ImGui::Separator();
         }
 
