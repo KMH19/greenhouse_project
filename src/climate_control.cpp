@@ -3,7 +3,6 @@
 
 #include "climate_control.h"
 
-
     // Comparison of double values
     bool ClimateControl::approximatelyEqual(double a, double b, double epsilon)
     {
@@ -42,16 +41,15 @@
         double a = s.getTemperature();
         double b = p.GetTargetTemperature();
         double epsilon = 0.05;
-        double internal_correction;
 
         std::cout << essentiallyEqual(a, b, epsilon) << std::endl;
         std::cout << approximatelyEqual(a, b, epsilon) << std::endl;
         std::cout << definitelyLessThan(b, a, epsilon) << std::endl;
-        std::cout << definitelyGreaterThan(b, a, epsilon) << std::endl;
+        std::cout << definitelyGreaterThan(b, a, epsilon) << std::endl << std::endl;
 
         if (essentiallyEqual(a, b, epsilon) == true || approximatelyEqual(a, b, epsilon) == true)
         {
-            internal_correction = 0.;
+            last_correction_ = 0.;
 
         }else if (definitelyGreaterThan(a, b, epsilon) == true)
         {
@@ -76,7 +74,9 @@
             h.SetFanSpeed(temp);
 
             // Correction of internal temperature according to fan efficiency
-            internal_correction = fabs(b)*h.GetFanEfficiency();
+            last_correction_ = fabs(a)-fabs(b)*h.GetFanEfficiency();
+            new_temp_ = a - last_correction_;
+
 
             std::cout << "Fanspeed was set to: " << temp << '%' << std::endl;
 
@@ -93,16 +93,17 @@
             std::cout << "Fanspeed was set to: " << temp << '%' << std::endl;
 
             // Heating could be added here (Not considered at this point)
-            internal_correction = a;
+            last_correction_ = 0.;
+            new_temp_ = a;
 
         }
-        return internal_correction;
+        return last_correction_;
     }
 
 
     void ClimateControl::Manual()
     {
-        std::cout << "Manual control" << std::endl;
+        std::cout << "Manual control not available" << std::endl;
         return;
     }
 

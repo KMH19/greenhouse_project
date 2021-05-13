@@ -28,8 +28,3 @@ void SensorInput::sensorRead(double &temperature, double &air_humidity, double &
     if (soil_humidity == soil_humidity_) return;
     soil_humidity_ = soil_humidity;
 }
-
-double SensorInput::sensorDisp()
-{
-        return temperature_, air_humidity_, soil_humidity_;
-}

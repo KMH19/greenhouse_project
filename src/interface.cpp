@@ -52,15 +52,15 @@
 
         p.grow(1);
 
-        double x = temp_sim_c[i];
+        temperature_c = temp_sim_c[i];
 
         // This tells the current air humidity (Polynomial factor)
-        air_humidity_c = 0.1*pow(x,2)+10;
+        air_humidity_c = 0.1*pow(temperature_c,2)+10;
 
         // This tells the current soil humidity, based on atmospheric temperature and humidity (Polynomial factor)
-        soil_humidity_c = 0.005*pow(x,2);
+        soil_humidity_c = 0.005*pow(temperature_c,2);
 
-        s.sensorRead(temp_sim_c[i], air_humidity_c, soil_humidity_c);   
+         s.sensorRead(temp_sim_c[i], air_humidity_c, soil_humidity_c);  
 
         std::cout << "Plant height: " << p.getHeight() << std::endl << std::endl;
 
@@ -78,18 +78,26 @@
             {
 
                 std::cout << "Internal temperature was not corrected (0)" << std::endl << std::endl; 
+                h.resetFan();
 
             }else{
 
-                sim.setTemp_i(internal_correction);
+                static double new_temp = c.getNewTemp();
 
-                std::cout << "Internal temperature was corrected to: " << internal_correction << std::endl << std::endl; 
+                sim.setTemp_i(new_temp);
+
+                std::cout << "Internal temperature was corrected by: " << internal_correction << std::endl << std::endl; 
+
+                s.sensorRead(new_temp, air_humidity_c, soil_humidity_c);  
 
             }
+
+
             
         }else{
 
             c.Manual();
+            return;
 
         }
     }
@@ -296,7 +304,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
         if (ImGui::CollapsingHeader("Manual Control", &f))
         {
-            ImGui::Text("Manual control is chosen, use the sliders below to control the system");
+            ImGui::Text("Manual is not available at this time, but this is how is would look");
             ImGui::Text("\n");
             ImGui::Text("Fan control");
             ImGui::Separator();
@@ -440,12 +448,12 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
                 if (ImGui::BeginTabItem("Plant attributes"))
                 {
                     
-                    ImGui::Text("This is where the plant variables are shown\n");
+                    ImGui::Text("This is where the plant variables are displayed\n");
                     ImGui::Separator();
                     ImGui::Text("\n");
 
 
-                    if (ImGui::BeginTable("table2", 3))
+                    if (ImGui::BeginTable("table1", 3))
                     {
                             ImGui::TableNextRow();
                             ImGui::TableNextColumn();
@@ -453,10 +461,10 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
                             ImGui::TableNextColumn();
                             ImGui::Text("%s",p.plant_names[p.getPlant()]);
                             ImGui::TableNextColumn();
+                            ImGui::Text("-");
                 
                             ImGui::TableNextRow();
-
-                            ImGui::Separator();ImGui::TableNextColumn();
+                            ImGui::TableNextColumn();
                             ImGui::Text("Plant height");
                             ImGui::TableNextColumn();
                             ImGui::Text("%f",p.getHeight());
@@ -471,6 +479,14 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
                             ImGui::TableNextColumn();
                             ImGui::Text("mm");
 
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Target temperature");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",p.GetTargetTemperature());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("celius");
+
                             ImGui::EndTable();
 
                     }
@@ -481,18 +497,120 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
                 
                 if (ImGui::BeginTabItem("Sensor data"))
                 {
-                    ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
+
+                    ImGui::Text("This is where the sensor variables are displayed\n");
+                    ImGui::Separator();
+                    ImGui::Text("\n");
+
+
+                    if (ImGui::BeginTable("table2", 3))
+                    {
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Target temperature");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",p.GetTargetTemperature());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("celius");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Curr. temperature");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",s.getTemperature());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("celius");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Curr. air humidity");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",s.getAirHumidity());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("celius");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text(" ");
+                            ImGui::TableNextColumn();
+                            ImGui::Text(" ");
+                            ImGui::TableNextColumn();
+                            ImGui::Text(" ");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Fan speed");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",h.GetFanSpeed());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("percent");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Fan efficiency");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",h.GetFanEfficiency());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("factor");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Fan T change");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",c.getLastCorrection());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("celius");
+
+
+
+                            ImGui::EndTable();
+
+                    }
                     ImGui::EndTabItem();
                 }
+
                 if (ImGui::BeginTabItem("Simulation data"))
                 {
-                    ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
-                    ImGui::EndTabItem();
+
+                            ImGui::Text("This is where the simulation variables are displayed\n");
+                            ImGui::Separator();
+                            ImGui::Text("\n");
+
+
+                            if (ImGui::BeginTable("table3", 3))
+                            {
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Sim temperature (out)");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",sim.getTemp_c());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("celius");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Sim temperature (in)");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",sim.getTemp_i());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("celius");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Sim humidity (out)");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",sim.getAirHum_c());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("percent");
+
+                            ImGui::EndTable();
                 }
-                ImGui::EndTabBar();
+                ImGui::EndTabItem();
             }
-        
+            ImGui::EndTabBar(); 
+        }
         ImGui::End();
+
 
 
 
