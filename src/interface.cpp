@@ -17,11 +17,6 @@
 #include "climate_control.h"
 #include "hardstate_output.h"
 
-    bool fan_c = false;
-    bool heating_c = false;
-    bool water_c = false;
-    bool light_c = false;
-
     void Simulation::Controls::setTemp_i(double& temperature)
     {
         if (temperature == temperature_i) return;
@@ -154,8 +149,6 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     knob.setOutlineThickness(1);
     knob.setPosition(255, 610);
 
-
-
     sf::RectangleShape tube1 {sf::Vector2f{5.0, 200}};
     tube1.setPosition(110, 10);
     tube1.setRotation(-90);
@@ -225,12 +218,90 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
             ImGui::BulletText("Use the hardstates windows to turn fan, heating, watering or light (on/off), \n");
             ImGui::Separator();
         }
+
+        if (ImGui::CollapsingHeader("Plant attributes"))
+        {
+        if (ImGui::TreeNode("Plant selector"))
+        {
+        ImGui::TextWrapped("Choose from the available options below");
+
+        if (ImGui::Button("Clear plant selection"))
+            ImGui::OpenPopup("Clear?");
+
+        // Always center this window when appearing
+        ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+        ImGui::SetNextWindowPos(center, ImGuiCond_Appearing, ImVec2(0.5f, 0.5f));
+
+        if (ImGui::BeginPopupModal("Clear?", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("Are you sure that you want to clear the current plant?\nThis operation cannot be undone!\n\n");
+            ImGui::Separator();
+
+            static bool dont_ask_me_next_time = false;
+            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+            ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+            ImGui::PopStyleVar();
+
+            if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            ImGui::SetItemDefaultFocus();
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            ImGui::EndPopup();
+        }
+
+        if (ImGui::Button("Select plant"))
+            ImGui::OpenPopup("Plant selection");
+        if (ImGui::BeginPopupModal("Plant selection", NULL, ImGuiWindowFlags_MenuBar))
+        {
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Close")) {}
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
+        ImGui::Text("This is where the current plant is selected\nRemember to set the initial height of the plant.");
+
+        // Testing behavior of widgets stacking their own regular popups over the modal.
+        static int item = 1;
+        static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
+        ImGui::Combo("Combo", &item, "Cucumber\0Tomato\0Chili\0\0");
+
+        if (ImGui::Button("Select plant size"))
+            ImGui::OpenPopup("Plant size");
+
+        // Also demonstrate passing a bool* to BeginPopupModal(), this will create a regular close button which
+        // will close the popup. Note that the visibility state of popups is owned by imgui, so the input value
+        // of the bool actually doesn't matter here.
+        bool unused_open = true;
+        if (ImGui::BeginPopupModal("Plant size", &unused_open))
+        {
+            ImGui::Text("The initial plant size is set here");
+            if (ImGui::Button("Close"))
+                ImGui::CloseCurrentPopup();
+            ImGui::EndPopup();
+        }
+
+        if (ImGui::Button("Close"))
+            ImGui::CloseCurrentPopup();
+        ImGui::EndPopup();
+        }
+
+        ImGui::TreePop();
+        }
+        }
+
+
         if (ImGui::CollapsingHeader("Control"))
         {
         static bool e = true;
+        static bool f = false;
         if (ImGui::RadioButton("Manual", e==false)) 
             { 
             e = false;
+            f = true;
             c.changeState(e); 
             }
 
@@ -239,19 +310,46 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         if (ImGui::RadioButton("Automatic", e==true)) 
             {
             e = true; 
+            f = false;
             c.changeState(e); 
             }
 
-            // Breakpoint KMH
+        if (ImGui::CollapsingHeader("Manual Control", &f))
+        {
+            ImGui::Text("Manual control is chosen, use the sliders below to control the system");
+            ImGui::Text("\n");
+            ImGui::Text("Fan control");
+            ImGui::Separator();
 
+            static int fan_;
+            static int water_;
+            static int light_;
+
+            if (ImGui::SliderInt("Fan", &fan_, 0, 100)) {
+                static double fan = fan_+0.;
+                h.SetFanSpeed(fan);
+            }
+
+            ImGui::Text("Water control");
+            ImGui::Separator();
+
+
+            if (ImGui::SliderInt("Water", &water_, 0, 100)) {
+                static double water = water_+0.;
+                h.SetWateringSpeed(water);
+            }
+
+            ImGui::Text("Light control");
+            ImGui::Separator();
+
+            if (ImGui::SliderInt("Light", &light_, 0, 100)) {
+                static double light = light_+0.;
+                h.SetLightIntensity(light);
+            }
+            ImGui::Text("\n");
         }
-        // if (ImGui::CollapsingHeader("Plant length"))
-        // {
-        //     if (ImGui::SliderFloat("Height", &stalk_length, 0., 300.)) 
-        // {
-        //     tomato_stalk.setSize(sf::Vector2f{5.0, stalk_length});
-        // }
-        // }
+        }
+
         if (ImGui::CollapsingHeader("Simulation"))
         {
         ImGui::Text("Choose between one-day simulation or series below:");
@@ -306,17 +404,19 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         ImGui::TreePop();
         }
         }
-        if (ImGui::CollapsingHeader("Hardstates"))
-        {
-            if (ImGui::BeginTable("split", 4))
-            {
-                ImGui::TableNextColumn(); ImGui::Checkbox("Fan",        &fan_c);
-                ImGui::TableNextColumn(); ImGui::Checkbox("Heating",    &heating_c);
-                ImGui::TableNextColumn(); ImGui::Checkbox("Watering",   &water_c);
-                ImGui::TableNextColumn(); ImGui::Checkbox("Light",      &light_c);
-                ImGui::EndTable();
-            }
-        }
+
+
+        // if (ImGui::CollapsingHeader("Hardstates",fan))
+        // {
+        //     if (ImGui::BeginTable("split", 4))
+        //     {
+        //         ImGui::TableNextColumn(); ImGui::Checkbox("Fan",        &fan);
+        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Heating",    &heating_c);
+        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Watering",   &water_c);
+        //         // ImGui::TableNextColumn(); ImGui::Checkbox("Light",      &light_c);
+        //         ImGui::EndTable();
+        //     }
+        // }
         ImGui::End();
 
         // clear the window with black color
@@ -332,7 +432,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         {
         tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
         window.draw(tomato_stalk);
-        std::cout << p.getHeight() << std::endl;
+
         }else if (p.getHeight() < 199)
         {
         tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});

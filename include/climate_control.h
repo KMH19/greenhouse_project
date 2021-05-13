@@ -8,6 +8,7 @@ class ClimateControl
 {
 private:
 bool auto_state_{true};
+bool manual_state_{false};
 
 
 public:
@@ -17,6 +18,7 @@ double Automatic(SensorInput& s, Plant& p, HardstateOutput& h);
 void Manual();
 
 bool checkAutoState() { return auto_state_; }
+bool checkManualState() { return auto_state_; }
 void changeState(bool& i);
 
 bool approximatelyEqual(double a, double b, double epsilon);

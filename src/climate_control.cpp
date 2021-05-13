@@ -29,6 +29,7 @@
     {
         if (i == auto_state_) return;
         auto_state_ = i;
+        manual_state_ = !i;
     }
 
     double ClimateControl::Automatic(SensorInput& s, Plant& p, HardstateOutput& h)
