@@ -120,28 +120,29 @@
 
 void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
 {
-
+//The cylinder glaas for the greenhouse
     sf::RectangleShape tube;
     tube.setSize(sf::Vector2f(190, 700));
     tube.setFillColor(sf::Color::Transparent);
     tube.setOutlineColor(sf::Color::White);
     tube.setOutlineThickness(5);
+    
     tube.setPosition(115, 15);
-
+//  The glass inside the tube 
     sf::RectangleShape glass;
     glass.setSize(sf::Vector2f(180, 480));
     glass.setFillColor(sf::Color::Transparent);
     glass.setOutlineColor(sf::Color::White);
     glass.setOutlineThickness(1);
     glass.setPosition(120, 20);
-
+// Compost door knob 
     sf::RectangleShape door;
     door.setSize(sf::Vector2f(120, 160));
     door.setFillColor(sf::Color::Transparent);
     door.setOutlineColor(sf::Color::White);
     door.setOutlineThickness(1);
     door.setPosition(150, 530);
-
+// Knob to the compost door
     sf::CircleShape knob;
     knob.setRadius(5);
     knob.setFillColor(sf::Color::Transparent);
