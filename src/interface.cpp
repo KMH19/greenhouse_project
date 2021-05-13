@@ -217,6 +217,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
             ImGui::BulletText("Select a plant of choice in plant attributes tab, \n");
             ImGui::BulletText("Change between automatic and manual control in the control tab, \n");
             ImGui::BulletText("For simulation of one day or several day use the simulation tab, \n");
+            ImGui::BulletText("The second window shows the data display window, \n");
             ImGui::Separator();
         }
 
