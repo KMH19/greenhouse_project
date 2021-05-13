@@ -2,19 +2,25 @@
 #include <string>
 #include "plant_base.h"
 
+/*********************************************************************************************
+ * @brief                       Controls simulation of the instantiated plant object  
+ * @param growth_rate_          Growth rate of the plant object
+ * @param target_temperature_   The temperature needed for optimal growth
+ * @param height_               Current height used for simulating growth in GUI
+ * @param max_height_           Max height used for stopping growth in simulation
+ * @param plant_type            Available plant types in enum (0, 1, 2 ,3)
+ * @param plant_names           Names of the plants as const char* (in order)
+ * @param type_                 The current plant type 
+ *********************************************************************************************/
 class Plant : public plant_base 
 {
-    private:
+private:
     double growth_rate_;
-
     double target_temperature_;
-
     float height_{0.};
-
     float max_height_{360};
 
-    public:
-
+public:
     enum plant_type 
     {    
     cactus_plant    = 0, 
@@ -30,44 +36,18 @@ class Plant : public plant_base
         "Paradise Tree",
     };
 
-    void grow(int days) override;
-
-    void reset()        override;
-
-    float getHeight() override { return height_; };
-    float getGrowthRate() { return growth_rate_; };
-
-    Plant::plant_type getPlant() const;
-
-    // std::string getName(Plant& p);
-
-
+    // For function descriptions refer to plant.cpp
     void setType(Plant::plant_type v, double growth_rate, double target_temperature);
+    void grow(int days)  override;
+    void reset()         override;
 
+
+    // Getters for the "Plant" class
+    Plant::plant_type getPlant() const;
+    float getHeight()    override { return height_;      };
+    float getGrowthRate()         { return growth_rate_; };
     double GetTargetTemperature() { return target_temperature_; }
 
     private:
     plant_type type_;
-};
-
-
-            // ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
-            // if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
-            // {
-            //     if (ImGui::BeginTabItem("Avocado"))
-            //     {
-            //         ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
-            //         ImGui::EndTabItem();
-            //     }
-            //     if (ImGui::BeginTabItem("Broccoli"))
-            //     {
-            //         ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
-            //         ImGui::EndTabItem();
-            //     }
-            //     if (ImGui::BeginTabItem("Cucumber"))
-            //     {
-            //         ImGui::Text("This is the Cucumber tab!\nblah blah blah blah blah");
-            //         ImGui::EndTabItem();
-            //     }
-            //     ImGui::EndTabBar();
-            // }
+};  // Class "Plant" end

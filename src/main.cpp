@@ -7,8 +7,7 @@
 
 int main(int argc, char const *argv[])
 {
-    // Instantiation of objects to their relevant classes
-    // Plant class which inherits the plant_base.h variables
+
     Plant plant_entity;
     SensorInput sensor1;
     ClimateControl c;
@@ -20,7 +19,8 @@ int main(int argc, char const *argv[])
     plant_entity.setType(Plant::cucumber_plant, 2, 15);
 
     std::cout << "Initializing GUI.." << std::endl;
-    
+
+    // Startup of the GUI
     gui.Init(plant_entity, sensor1, c, h, sim);
     
     return 0;

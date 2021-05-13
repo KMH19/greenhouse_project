@@ -17,6 +17,7 @@
 #include "climate_control.h"
 #include "hardstate_output.h"
 
+    // The next (4) functions are setters for the private variables in the "Controls" class
     void Simulation::Controls::setTemp_i(double& temperature)
     {
         if (temperature == temperature_i) return;
@@ -40,18 +41,22 @@
         d = current_day_;
     }
 
-        void Simulation::Controls::resetDay()
+    void Simulation::Controls::resetDay()
     {
         current_day_ = 0;
     }
 
+    // Simulates one day, has a lot of parameters
+    // All std::cout is used for logging to external console
     void Simulation::Controls::Simulate(int i, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim)
     {
         std::cout << "Day no.: " << sim.getDay() << std::endl;
         std::cout << "-----------------------" << std::endl << std::endl;
 
+        // Call grow function
         p.grow(1);
 
+        // Store a simulation variable from the temperature vectord
         temperature_c = temp_sim_c[i];
 
         // This tells the current air humidity (Polynomial factor)
@@ -60,7 +65,8 @@
         // This tells the current soil humidity, based on atmospheric temperature and humidity (Polynomial factor)
         soil_humidity_c = 0.005*pow(temperature_c,2);
 
-         s.sensorRead(temp_sim_c[i], air_humidity_c, soil_humidity_c);  
+        //Read values and store them in the sensor_input obj
+        s.sensorRead(temp_sim_c[i], air_humidity_c, soil_humidity_c);  
 
         std::cout << "Plant height: " << p.getHeight() << std::endl << std::endl;
 
@@ -89,17 +95,16 @@
                 std::cout << "Internal temperature was corrected by: " << internal_correction << std::endl << std::endl; 
 
                 s.sensorRead(new_temp, air_humidity_c, soil_humidity_c);  
-
             }
 
         }else{
 
             c.Manual();
             return;
-
         }
-    }
+    }   // Function "Simulate" end
 
+    // This enables the posibillity to simulate day-by-day and several days at once.
     void Simulation::Controls::SimulateDays(int days_, Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
     {
 
@@ -116,14 +121,12 @@
             {
                 sim.Simulate(i, p, s, c, h, sim);
             }
-
         }
-
     }
 
 void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, HardstateOutput& h, Controls& sim) 
 {
-//The cylinder glaas for the greenhouse
+    // The cylinder glass for the tube
     sf::RectangleShape tube;
     tube.setSize(sf::Vector2f(190, 700));
     tube.setFillColor(sf::Color::Black);
@@ -131,72 +134,35 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     tube.setOutlineThickness(5);
     
     tube.setPosition(115, 15);
-//  The glass inside the tube 
+    //  The glass inside the tube 
     sf::RectangleShape glass;
     glass.setSize(sf::Vector2f(180, 480));
     glass.setFillColor(sf::Color::White);
     glass.setOutlineColor(sf::Color::Black);
     glass.setOutlineThickness(1);
     glass.setPosition(120, 20);
-// Compost door  
+    // Compost door  
     sf::RectangleShape door;
     door.setSize(sf::Vector2f(120, 160));
     door.setFillColor(sf::Color::Transparent);
     door.setOutlineColor(sf::Color::White);
     door.setOutlineThickness(1);
     door.setPosition(150, 530);
-// Knob to the compost door
+    // Knob to the compost door
     sf::CircleShape knob;
     knob.setRadius(5);
     knob.setFillColor(sf::Color::Transparent);
     knob.setOutlineColor(sf::Color::White);
     knob.setOutlineThickness(1);
     knob.setPosition(255, 610);
-//Koordinat system, skal ud kommenteres 
-    sf::CircleShape origo;
-    origo.setRadius(1);
-    origo.setFillColor(sf::Color::Yellow);
-    origo.setOutlineColor(sf::Color::Yellow);
-    origo.setOutlineThickness(5);
-    origo.setPosition(0, 0);
-//højre øverste hjørne
-    sf::CircleShape høh;
-    høh.setRadius(1);
-    høh.setFillColor(sf::Color::Yellow);
-    høh.setOutlineColor(sf::Color::Yellow);
-    høh.setOutlineThickness(5);
-    høh.setPosition(1918, 0);
-//nedereste højre hjørne 
-    sf::CircleShape nhh;
-    nhh.setRadius(1);
-    nhh.setFillColor(sf::Color::Yellow);
-    nhh.setOutlineColor(sf::Color::Yellow);
-    nhh.setOutlineThickness(5);
-    nhh.setPosition(1918, 1070);
-//nedereste venstre hjørne 
-    sf::CircleShape nvh;
-    nvh.setRadius(1);
-    nvh.setFillColor(sf::Color::Yellow);
-    nvh.setOutlineColor(sf::Color::Yellow);
-    nvh.setOutlineThickness(5);
-    nvh.setPosition(0, 1070);
-//midten 
-    sf::CircleShape midten;
-    midten.setRadius(1);
-    midten.setFillColor(sf::Color::Yellow);
-    midten.setOutlineColor(sf::Color::Yellow);
-    midten.setOutlineThickness(5);
-    midten.setPosition(960, 540);
-
-//Baggrund til gulvet 
-sf::RectangleShape gulv;
+    // Background for the floor
+    sf::RectangleShape gulv;
     gulv.setSize(sf::Vector2f(1920,500));
     gulv.setFillColor(sf::Color{240, 185, 137});
     gulv.setOutlineColor(sf::Color{240, 185, 137});
     gulv.setOutlineThickness(1);
     gulv.setPosition(0, 720);
-//Bræder 
-
+    // Floor lines 
     sf::RectangleShape streg;
     streg.setSize(sf::Vector2f(1920,2.5));
     streg.setFillColor(sf::Color{0, 0, 0});
@@ -204,47 +170,42 @@ sf::RectangleShape gulv;
     streg.setOutlineThickness(1);
     streg.setPosition(0, 750);
 
-     sf::RectangleShape streg1;
+    sf::RectangleShape streg1;
     streg1.setSize(sf::Vector2f(1920,2.5));
     streg1.setFillColor(sf::Color{0, 0, 0});
     streg1.setOutlineColor(sf::Color{240, 185, 137});
     streg1.setOutlineThickness(1);
     streg1.setPosition(0, 800);
 
-     sf::RectangleShape streg2;
+    sf::RectangleShape streg2;
     streg2.setSize(sf::Vector2f(1920,2.5));
     streg2.setFillColor(sf::Color{0, 0, 0});
     streg2.setOutlineColor(sf::Color{240, 185, 137});
     streg2.setOutlineThickness(1);
     streg2.setPosition(0, 850);
 
-     sf::RectangleShape streg3;
+    sf::RectangleShape streg3;
     streg3.setSize(sf::Vector2f(1920,2.5));
     streg3.setFillColor(sf::Color{0, 0, 0});
     streg3.setOutlineColor(sf::Color{240, 185, 137});
     streg3.setOutlineThickness(1);
     streg3.setPosition(0, 900);
 
-
-
-     sf::RectangleShape streg4;
+    sf::RectangleShape streg4;
     streg4.setSize(sf::Vector2f(1920,2.5));
     streg4.setFillColor(sf::Color{0, 0, 0});
     streg4.setOutlineColor(sf::Color{240, 185, 137});
     streg4.setOutlineThickness(1);
     streg4.setPosition(0, 950);
 
-
-
-     sf::RectangleShape streg5;
+    sf::RectangleShape streg5;
     streg5.setSize(sf::Vector2f(1920,2.5));
     streg5.setFillColor(sf::Color{0, 0, 0});
     streg5.setOutlineColor(sf::Color{240, 185, 137});
     streg5.setOutlineThickness(1);
     streg5.setPosition(0, 1000);
 
-
-     sf::RectangleShape streg6;
+    sf::RectangleShape streg6;
     streg6.setSize(sf::Vector2f(1920,2.5));
     streg6.setFillColor(sf::Color{0, 0, 0});
     streg6.setOutlineColor(sf::Color{240, 185, 137});
@@ -258,8 +219,7 @@ sf::RectangleShape gulv;
     windowframe.setOutlineThickness(5);
     windowframe.setPosition(1200, 200);
 
-
-     sf::CircleShape lampe;
+    sf::CircleShape lampe;
     lampe.setRadius(75);
     lampe.setFillColor(sf::Color{255, 247, 33});
     lampe.setOutlineColor(sf::Color{255, 247, 33});
@@ -280,14 +240,12 @@ sf::RectangleShape gulv;
     haengsel.setOutlineThickness(5);
     haengsel.setPosition(876, -100);
     
-
-
     sf::RectangleShape tube1 {sf::Vector2f{5.0, 200}};
     tube1.setPosition(110, 10);
     tube1.setRotation(-90);
-    
     tube1.setFillColor(sf::Color{0, 255, 0});
 
+    // (7) Plant objects below
     sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, p.getHeight()}};
     tomato_stalk.setPosition(210, 484);
     tomato_stalk.setRotation(180);
@@ -323,13 +281,12 @@ sf::RectangleShape gulv;
     tomato_stalk7.setRotation(-150);
     tomato_stalk7.setFillColor(sf::Color{0, 255, 0});
 
-    // create the window
+    // Create the window
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Greenhouse simulator");
-
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
-    // run the program as long as the window is open
+    // Run the program as long as the window is open
     sf::Clock deltaClock;
     while (window.isOpen())
     {
@@ -343,10 +300,12 @@ sf::RectangleShape gulv;
                 window.close();
         }
 
+        // Create a new window
         ImGui::SFML::Update(window, deltaClock.restart());
         ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_FirstUseEver);
         ImGui::Begin("Greenhouse Simulation");
 
+        // Show popup, if this is the first time
         if (sim.first_popup == true){
         ImGui::OpenPopup("Hello");
 
@@ -367,7 +326,6 @@ sf::RectangleShape gulv;
         }
         }
 
-
         if (ImGui::CollapsingHeader("Help"))
         {
             ImGui::Text("USAGE:");
@@ -381,8 +339,10 @@ sf::RectangleShape gulv;
         if (ImGui::CollapsingHeader("Plant attributes"))
         {
 
+        // Since we are looping, it is smart to define our local variables as static (hint: Because they remain in memory throughout program life)
         static int plant = 0;
-
+        
+        // Printing formatted data using the principles of printf
         ImGui::Text("The current plant is: %i", p.getPlant());
 
         static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
@@ -431,7 +391,6 @@ sf::RectangleShape gulv;
         }
         }
 
-
         if (ImGui::CollapsingHeader("Control"))
         {
         static bool e = true;
@@ -470,7 +429,6 @@ sf::RectangleShape gulv;
 
             ImGui::Text("Water control");
             ImGui::Separator();
-
 
             if (ImGui::SliderInt("Water", &water_, 0, 100)) {
                 static double water = water_+0.;
@@ -533,11 +491,6 @@ sf::RectangleShape gulv;
             if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
             ImGui::EndPopup();
         }
-        
-        // {
-        //     p.reset();
-        //     sim.resetDay();
-        // }
         ImGui::PopStyleColor(3);
         ImGui::PopID();
 
@@ -545,11 +498,11 @@ sf::RectangleShape gulv;
         }
         if (ImGui::TreeNode("Several days"))
         {
-        if (ImGui::SliderInt("Days", &sim.SimDays, 1, 20)) {}
+        if (ImGui::SliderInt("Days", &sim.sim_days, 1, 20)) {}
 
             if (ImGui::Button("Simulate"))
             {
-                sim.SimulateDays(sim.SimDays, p, s, c, h, sim);
+                sim.SimulateDays(sim.sim_days, p, s, c, h, sim);
             }
 
             ImGui::SameLine();
@@ -602,7 +555,6 @@ sf::RectangleShape gulv;
                     ImGui::Separator();
                     ImGui::Text("\n");
 
-
                     if (ImGui::BeginTable("table1", 3))
                     {
                             ImGui::TableNextRow();
@@ -642,8 +594,6 @@ sf::RectangleShape gulv;
                     }
                     ImGui::EndTabItem();
                 }
-            
-
                 
                 if (ImGui::BeginTabItem("Sensor data"))
                 {
@@ -651,7 +601,6 @@ sf::RectangleShape gulv;
                     ImGui::Text("This is where the sensor variables are displayed\n");
                     ImGui::Separator();
                     ImGui::Text("\n");
-
 
                     if (ImGui::BeginTable("table2", 3))
                     {
@@ -711,8 +660,6 @@ sf::RectangleShape gulv;
                             ImGui::TableNextColumn();
                             ImGui::Text("celius");
 
-
-
                             ImGui::EndTable();
 
                     }
@@ -725,7 +672,6 @@ sf::RectangleShape gulv;
                             ImGui::Text("This is where the simulation variables are displayed\n");
                             ImGui::Separator();
                             ImGui::Text("\n");
-
 
                             if (ImGui::BeginTable("table3", 3))
                             {
@@ -761,22 +707,14 @@ sf::RectangleShape gulv;
         }
         ImGui::End();
 
-
-
-
-
-        // clear the window with black color
+        // Setting background color
         window.clear(sf::Color{237, 213, 192});
 
+        // Draw previously defined objects
         window.draw(tube);
         window.draw(glass);
         window.draw(door);
         window.draw(knob);
-        window.draw(origo);
-        window.draw(høh);
-        window.draw(nhh);
-        window.draw(nvh);
-        window.draw(midten);
         window.draw(gulv);
         window.draw(streg);
         window.draw(streg1);
@@ -790,14 +728,15 @@ sf::RectangleShape gulv;
         window.draw(skaerm);
         window.draw(haengsel);
 
-
+        // Plant growth logic ()
         if (p.getHeight() < 85)
         {
+
         tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
         window.draw(tomato_stalk);
-
         }else if (p.getHeight() < 199)
         {
+
         tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
         tomato_stalk2.setSize(sf::Vector2f{5.0, p.getHeight()-85});
         tomato_stalk3.setSize(sf::Vector2f{5.0, p.getHeight()-85});
@@ -806,6 +745,7 @@ sf::RectangleShape gulv;
         window.draw(tomato_stalk3);
         }else if (p.getHeight() < 299)
         {
+
         tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
         tomato_stalk4.setSize(sf::Vector2f{5.0, p.getHeight()-199});
         tomato_stalk5.setSize(sf::Vector2f{5.0, p.getHeight()-199});
@@ -816,6 +756,7 @@ sf::RectangleShape gulv;
         window.draw(tomato_stalk5);
         }else if (p.getHeight() < 399)
         {
+
         tomato_stalk.setSize(sf::Vector2f{5.0, p.getHeight()});
         tomato_stalk6.setSize(sf::Vector2f{5.0, p.getHeight()-299});
         tomato_stalk7.setSize(sf::Vector2f{5.0, p.getHeight()-299});
@@ -827,6 +768,7 @@ sf::RectangleShape gulv;
         window.draw(tomato_stalk6);
         window.draw(tomato_stalk7);
         }else{
+            
         window.draw(tomato_stalk);
         window.draw(tomato_stalk2);
         window.draw(tomato_stalk3);
@@ -835,8 +777,6 @@ sf::RectangleShape gulv;
         window.draw(tomato_stalk6);
         window.draw(tomato_stalk7);
         }
-
-        //450
 
         ImGui::SFML::Render(window);
 
