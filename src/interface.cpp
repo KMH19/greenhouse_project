@@ -191,7 +191,8 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     tomato_stalk7.setFillColor(sf::Color{0, 255, 0});
 
     // create the window
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window");
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Greenhouse simulator");
+
     window.setFramerateLimit(60);
     ImGui::SFML::Init(window);
 
