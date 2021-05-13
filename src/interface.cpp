@@ -92,8 +92,6 @@
 
             }
 
-
-            
         }else{
 
             c.Manual();
@@ -225,7 +223,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
         if (ImGui::BeginPopupModal("Hello", NULL, ImGuiWindowFlags_AlwaysAutoResize))
         {
-            ImGui::Text("Welcome to the greenhouse simulation of the tube\n\nPlease simulate one day before referring to the data display window!\n\nPlease, refer to the help section if needed.");
+            ImGui::Text("Welcome to the greenhouse simulation of the tube\n\nPlease simulate one day before referring to the data display window!\n\nAlso, refer to the help section if needed.");
             ImGui::Separator();
 
             ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
