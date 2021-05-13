@@ -111,9 +111,6 @@
                 sim.Simulate(i, p, s, c, h, sim);
             }
 
-            std::cout << sim.SimDays << std::endl << std::endl;
-            std::cout << days_ << std::endl << std::endl;
-            std::cout << current_day_ << std::endl;
         }
 
     }
@@ -229,7 +226,6 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 
         static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
         ImGui::Combo("Combo", &plant, "0. Cactus plant\0 1. Tomato plant\0 2. Cucumber plant\0 3. Paradise tree\0\0");    
-        std::cout << plant << std::endl;
         if (ImGui::Button("Select plant"))
         {
             ImGui::OpenPopup("Select plant");
