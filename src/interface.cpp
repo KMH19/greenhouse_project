@@ -126,16 +126,16 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
 //The cylinder glaas for the greenhouse
     sf::RectangleShape tube;
     tube.setSize(sf::Vector2f(190, 700));
-    tube.setFillColor(sf::Color::Transparent);
-    tube.setOutlineColor(sf::Color::White);
+    tube.setFillColor(sf::Color::Black);
+    tube.setOutlineColor(sf::Color::Black);
     tube.setOutlineThickness(5);
     
     tube.setPosition(115, 15);
 //  The glass inside the tube 
     sf::RectangleShape glass;
     glass.setSize(sf::Vector2f(180, 480));
-    glass.setFillColor(sf::Color::Transparent);
-    glass.setOutlineColor(sf::Color::White);
+    glass.setFillColor(sf::Color::White);
+    glass.setOutlineColor(sf::Color::Black);
     glass.setOutlineThickness(1);
     glass.setPosition(120, 20);
 // Compost door  
@@ -197,17 +197,89 @@ sf::RectangleShape gulv;
     gulv.setPosition(0, 720);
 //Bræder 
 
-// for (int i = 0; i < 4; i++)
-// {
     sf::RectangleShape streg;
     streg.setSize(sf::Vector2f(1920,2.5));
     streg.setFillColor(sf::Color{0, 0, 0});
     streg.setOutlineColor(sf::Color{240, 185, 137});
     streg.setOutlineThickness(1);
     streg.setPosition(0, 750);
-// }
+
+     sf::RectangleShape streg1;
+    streg1.setSize(sf::Vector2f(1920,2.5));
+    streg1.setFillColor(sf::Color{0, 0, 0});
+    streg1.setOutlineColor(sf::Color{240, 185, 137});
+    streg1.setOutlineThickness(1);
+    streg1.setPosition(0, 800);
+
+     sf::RectangleShape streg2;
+    streg2.setSize(sf::Vector2f(1920,2.5));
+    streg2.setFillColor(sf::Color{0, 0, 0});
+    streg2.setOutlineColor(sf::Color{240, 185, 137});
+    streg2.setOutlineThickness(1);
+    streg2.setPosition(0, 850);
+
+     sf::RectangleShape streg3;
+    streg3.setSize(sf::Vector2f(1920,2.5));
+    streg3.setFillColor(sf::Color{0, 0, 0});
+    streg3.setOutlineColor(sf::Color{240, 185, 137});
+    streg3.setOutlineThickness(1);
+    streg3.setPosition(0, 900);
+
+
+
+     sf::RectangleShape streg4;
+    streg4.setSize(sf::Vector2f(1920,2.5));
+    streg4.setFillColor(sf::Color{0, 0, 0});
+    streg4.setOutlineColor(sf::Color{240, 185, 137});
+    streg4.setOutlineThickness(1);
+    streg4.setPosition(0, 950);
+
+
+
+     sf::RectangleShape streg5;
+    streg5.setSize(sf::Vector2f(1920,2.5));
+    streg5.setFillColor(sf::Color{0, 0, 0});
+    streg5.setOutlineColor(sf::Color{240, 185, 137});
+    streg5.setOutlineThickness(1);
+    streg5.setPosition(0, 1000);
+
+
+     sf::RectangleShape streg6;
+    streg6.setSize(sf::Vector2f(1920,2.5));
+    streg6.setFillColor(sf::Color{0, 0, 0});
+    streg6.setOutlineColor(sf::Color{240, 185, 137});
+    streg6.setOutlineThickness(1);
+    streg6.setPosition(0, 1050);
+
+    sf::RectangleShape windowframe;
+    windowframe.setSize(sf::Vector2f(600,100));
+    windowframe.setFillColor(sf::Color{77, 70, 207});
+    windowframe.setOutlineColor(sf::Color{0, 0,0});
+    windowframe.setOutlineThickness(5);
+    windowframe.setPosition(1200, 200);
+
+
+     sf::CircleShape lampe;
+    lampe.setRadius(75);
+    lampe.setFillColor(sf::Color{255, 247, 33});
+    lampe.setOutlineColor(sf::Color{255, 247, 33});
+    lampe.setOutlineThickness(5);
+    lampe.setPosition(800, 100);
   
- 
+    sf::RectangleShape skaerm;
+    skaerm.setSize(sf::Vector2f(152,76));
+    skaerm.setFillColor(sf::Color{0, 0, 0});
+    skaerm.setOutlineColor(sf::Color{0, 0,0});
+    skaerm.setOutlineThickness(5);
+    skaerm.setPosition(800, 100);
+
+    sf::RectangleShape haengsel;
+    haengsel.setSize(sf::Vector2f(1.5,200));
+    haengsel.setFillColor(sf::Color{0, 0, 0});
+    haengsel.setOutlineColor(sf::Color{0, 0,0});
+    haengsel.setOutlineThickness(5);
+    haengsel.setPosition(876, -100);
+    
 
 
     sf::RectangleShape tube1 {sf::Vector2f{5.0, 200}};
@@ -694,7 +766,7 @@ sf::RectangleShape gulv;
 
 
         // clear the window with black color
-        window.clear(sf::Color::Black);
+        window.clear(sf::Color{237, 213, 192});
 
         window.draw(tube);
         window.draw(glass);
@@ -707,7 +779,17 @@ sf::RectangleShape gulv;
         window.draw(midten);
         window.draw(gulv);
         window.draw(streg);
-       
+        window.draw(streg1);
+        window.draw(streg2);
+        window.draw(streg3);
+        window.draw(streg4);
+        window.draw(streg5);
+        window.draw(streg6);
+        window.draw(windowframe);
+        window.draw(lampe);
+        window.draw(skaerm);
+        window.draw(haengsel);
+
 
         if (p.getHeight() < 85)
         {
