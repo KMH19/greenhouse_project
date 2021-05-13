@@ -7,6 +7,8 @@
 
 int main(int argc, char const *argv[])
 {
+    // Instantiation of objects to their relevant classes
+    // Plant class which inherits the plant_base.h variables
     Plant plant_entity;
     SensorInput sensor1;
     ClimateControl c;
