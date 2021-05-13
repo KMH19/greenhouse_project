@@ -29,7 +29,11 @@
     }
 
     void Plant::grow(int days) {
+    if (height_ < max_height_)
+    {
         height_ = height_ + days * growth_rate_;
+    }else
+        return;
     }
 
     void Plant::reset() {

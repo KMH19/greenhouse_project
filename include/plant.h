@@ -11,6 +11,8 @@ class Plant : public plant_base
 
     float height_{0.};
 
+    float max_height_{360};
+
     public:
 
     enum plant_type 

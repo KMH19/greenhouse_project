@@ -9,10 +9,11 @@ class ClimateControl
 private:
 bool auto_state_{true};
 bool manual_state_{false};
+double last_correction_{0.};
+double new_temp_{0.};
 
 
 public:
-
 double Automatic(SensorInput& s, Plant& p, HardstateOutput& h);
 
 void Manual();
@@ -20,6 +21,8 @@ void Manual();
 bool checkAutoState() { return auto_state_; }
 bool checkManualState() { return auto_state_; }
 void changeState(bool& i);
+double getLastCorrection() { return last_correction_; }
+double getNewTemp() { return new_temp_; }
 
 bool approximatelyEqual(double a, double b, double epsilon);
 bool essentiallyEqual(double a, double b, double epsilon);

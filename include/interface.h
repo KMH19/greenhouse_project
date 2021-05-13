@@ -19,9 +19,7 @@ bool light_c{false};
 bool heating_c{false};
 
 int current_day_{0};
-// int sim_days_{0};
 
-// Global temperature -> Fan speed -> Difference -> Local temperature
 // Temperature outside the greenhouse
 double temperature_c{20};
 double air_humidity_c{20};
@@ -37,6 +35,8 @@ double x;
 std::vector<double> temp_sim_c = {15.4, 15.6, 17, 18, 20, 21, 25, 20, 20, 21, 25, 20, 15.4, 15.6, 17, 18, 15.4, 15.6, 17, 18};
 
 public:
+bool first_popup{true};
+
 int SimDays{1};
 
 bool getFan()           { return fan_c;           };
@@ -59,8 +59,6 @@ void setTemp_i(double& temperature);
 void setAirHum_i(double& air_humidity);
 void setSoilHum_i(double& soil_humidity);
 
-// int setSimDays(int &d);
-// int getSimDays()        { return sim_days_;       };
 void setDay(int &d);
 void resetDay();
 int getDay()            { return current_day_;    };
