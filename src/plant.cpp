@@ -1,6 +1,18 @@
 #include "plant.h"
 #include "plant_lib.h"
 
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[-1]))
+
+
+    // std::string getName()
+    // {
+    //     int i = Plant::getPlant();
+    //     if (i < ARRAY_SIZE(p.plant_names)) {
+    //     return p.plant_names[i];
+    // }
+    // return "unknown";
+    // }
+
     Plant::plant_type Plant::getPlant() const { 
         return type_;
     }

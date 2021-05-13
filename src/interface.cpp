@@ -433,7 +433,64 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         ImGui::End();
 
         ImGui::Begin("Data Display");
-        ImGui::Text("LOL");
+            ImGuiTabBarFlags tab_bar_flags = ImGuiTabBarFlags_None;
+            if (ImGui::BeginTabBar("MyTabBar", tab_bar_flags))
+            {
+                if (ImGui::BeginTabItem("Plant attributes"))
+                {
+                    
+                    ImGui::Text("This is where the plant variables are shown\n");
+                    ImGui::Separator();
+                    ImGui::Text("\n");
+
+
+                    if (ImGui::BeginTable("table2", 3))
+                    {
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Plant Type");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%s",p.plant_names[p.getPlant()]);
+                            ImGui::TableNextColumn();
+                
+                            ImGui::TableNextRow();
+
+                            ImGui::Separator();ImGui::TableNextColumn();
+                            ImGui::Text("Plant height");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",p.getHeight());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("mm");
+
+                            ImGui::TableNextRow();
+                            ImGui::TableNextColumn();
+                            ImGui::Text("Growth Rate");
+                            ImGui::TableNextColumn();
+                            ImGui::Text("%f",p.getGrowthRate());
+                            ImGui::TableNextColumn();
+                            ImGui::Text("mm");
+
+                            ImGui::EndTable();
+
+                    }
+                    ImGui::EndTabItem();
+                }
+            
+
+                
+                if (ImGui::BeginTabItem("Sensor data"))
+                {
+                    ImGui::Text("This is the Avocado tab!\nblah blah blah blah blah");
+                    ImGui::EndTabItem();
+                }
+                if (ImGui::BeginTabItem("Simulation data"))
+                {
+                    ImGui::Text("This is the Broccoli tab!\nblah blah blah blah blah");
+                    ImGui::EndTabItem();
+                }
+                ImGui::EndTabBar();
+            }
+        
         ImGui::End();
 
 
