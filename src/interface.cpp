@@ -219,6 +219,48 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
             ImGui::Separator();
         }
 
+        if (ImGui::CollapsingHeader("Plant attributes"))
+        {
+        ImGui::Text("The current plant is: %i", p.getPlant());
+        static int plant = 0;
+        static float color[4] = { 0.4f, 0.7f, 0.0f, 0.5f };
+        ImGui::Combo("Combo", &plant, "Cactus plant\0Tomato plant\0Chili plant\0Paradise tree\0\0");    
+        std::cout << plant << std::endl;
+        if (ImGui::Button("Select plant"))
+        {
+            ImGui::OpenPopup("Select plant");
+        }
+                    
+        if (ImGui::BeginPopupModal("Select plant", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+        {
+            ImGui::Text("Are you sure that you want to change the current plant?\nThis operation cannot be undone!\n\n");
+            ImGui::Separator();
+
+            static bool dont_ask_me_next_time = false;
+            ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+            ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+            ImGui::PopStyleVar();
+
+            if (ImGui::Button("OK", ImVec2(120, 0))) 
+            { 
+                ImGui::CloseCurrentPopup();
+                p.reset();
+                sim.resetDay(); 
+
+                if (plant == 0)
+                p.setType(Plant::cucumber_plant, 0.5, 15);
+                }else if (plant == 1)
+                {
+                    
+                } 
+
+            ImGui::SetItemDefaultFocus();
+            ImGui::SameLine();
+            if (ImGui::Button("Cancel", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+            ImGui::EndPopup();
+        }
+        }
+
 
         if (ImGui::CollapsingHeader("Control"))
         {
