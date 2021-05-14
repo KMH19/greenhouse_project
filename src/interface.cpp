@@ -132,7 +132,6 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     tube.setFillColor(sf::Color::Black);
     tube.setOutlineColor(sf::Color::Black);
     tube.setOutlineThickness(5);
-    
     tube.setPosition(115, 15);
     //  The glass inside the tube 
     sf::RectangleShape glass;
@@ -215,7 +214,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     sf::RectangleShape windowframe;
     windowframe.setSize(sf::Vector2f(600,100));
     windowframe.setFillColor(sf::Color{77, 70, 207});
-    windowframe.setOutlineColor(sf::Color{0, 0,0});
+    windowframe.setOutlineColor(sf::Color::White);
     windowframe.setOutlineThickness(5);
     windowframe.setPosition(1200, 200);
 
@@ -244,6 +243,93 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     tube1.setPosition(110, 10);
     tube1.setRotation(-90);
     tube1.setFillColor(sf::Color{0, 255, 0});
+
+    sf::RectangleShape dør;
+    dør.setSize(sf::Vector2f(300, 700));
+    dør.setFillColor(sf::Color{82, 60, 34});
+    dør.setOutlineColor(sf::Color::White);
+    dør.setOutlineThickness(5);
+    dør.setPosition(860, 15);
+
+    sf::RectangleShape liste;
+    liste.setSize(sf::Vector2f(1920,2.5));
+    liste.setFillColor(sf::Color::White);
+    liste.setOutlineColor(sf::Color::White);
+    liste.setOutlineThickness(10);
+    liste.setPosition(0, 710);
+
+    sf::CircleShape haandtag;
+    haandtag.setRadius(10);
+    haandtag.setFillColor(sf::Color{213,178,64});
+    haandtag.setOutlineColor(sf::Color{213,178,64});
+    haandtag.setOutlineThickness(5);
+    haandtag.setPosition(870, 325);
+
+    sf::RectangleShape planke;
+    planke.setSize(sf::Vector2f(1,699));
+    planke.setFillColor(sf::Color{0, 0, 0});
+    planke.setOutlineColor(sf::Color{0, 0,0});
+    planke.setOutlineThickness(1);
+    planke.setPosition(1010, 16);
+
+    sf::RectangleShape planke1;
+    planke1.setSize(sf::Vector2f(299,1));
+    planke1.setFillColor(sf::Color{0, 0, 0});
+    planke1.setOutlineColor(sf::Color{0, 0, 0});
+    planke1.setOutlineThickness(1);
+    planke1.setPosition(860, 200);
+
+     sf::RectangleShape dørbund;
+    dørbund.setSize(sf::Vector2f(292, 1));
+    dørbund.setFillColor(sf::Color{82, 60, 34});
+    dørbund.setOutlineColor(sf::Color{82, 60, 34});
+    dørbund.setOutlineThickness(4);
+    dørbund.setPosition(864, 715);
+
+    sf::RectangleShape hus;
+    hus.setSize(sf::Vector2f(35, 76));
+    hus.setFillColor(sf::Color{175, 171, 179});
+    hus.setOutlineColor(sf::Color{175, 171, 179});
+    hus.setOutlineThickness(4);
+    hus.setPosition(1500, 220); 
+
+     sf::RectangleShape hus1;
+    hus1.setSize(sf::Vector2f(35, 66));
+    hus1.setFillColor(sf::Color{120, 118, 122});
+    hus1.setOutlineColor(sf::Color{120, 118, 122});
+    hus1.setOutlineThickness(4);
+    hus1.setPosition(1465, 230);
+
+    sf::RectangleShape hus2;
+    hus2.setSize(sf::Vector2f(35, 26));
+    hus2.setFillColor(sf::Color{74, 74, 79});
+    hus2.setOutlineColor(sf::Color{74, 74, 79});
+    hus2.setOutlineThickness(4);
+    hus2.setPosition(1430, 270);
+
+    sf::RectangleShape skygge;
+    skygge.setSize(sf::Vector2f(180, 660));
+    skygge.setFillColor(sf::Color{140, 110, 84});
+    skygge.setOutlineColor(sf::Color{140, 110, 84});
+    skygge.setOutlineThickness(5);
+    skygge.setPosition(70, 35);
+
+    sf::RectangleShape skygge1;
+    skygge1.setSize(sf::Vector2f(180, 680));
+    skygge1.setFillColor(sf::Color{181, 175, 167});
+    skygge1.setOutlineColor(sf::Color{181, 175, 167});
+    skygge1.setOutlineThickness(5);
+    skygge1.setPosition(70, 35);
+
+    sf::CircleShape sol;
+    sol.setRadius(10);
+    sol.setFillColor(sf::Color{245, 182, 98});
+    sol.setOutlineColor(sf::Color{245, 182, 98});
+    sol.setOutlineThickness(5);
+    sol.setPosition(1740, 215);
+
+
+
 
     // (7) Plant objects below
     sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, p.getHeight()}};
@@ -711,6 +797,9 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         window.clear(sf::Color{237, 213, 192});
 
         // Draw previously defined objects
+        window.draw(liste);
+        window.draw(skygge1);
+        window.draw(skygge);
         window.draw(tube);
         window.draw(glass);
         window.draw(door);
@@ -724,9 +813,21 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         window.draw(streg5);
         window.draw(streg6);
         window.draw(windowframe);
+        window.draw(dør);
+        window.draw(dørbund);
+        window.draw(planke1);
+        window.draw(planke);
+        window.draw(haandtag);                
         window.draw(lampe);
         window.draw(skaerm);
         window.draw(haengsel);
+        window.draw(hus2);  
+        window.draw(hus1);
+        window.draw(hus);
+        window.draw(sol);
+        
+              
+        
 
         // Plant growth logic ()
         if (p.getHeight() < 85)
