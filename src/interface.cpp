@@ -328,8 +328,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     sol.setOutlineThickness(5);
     sol.setPosition(1740, 215);
 
-
-
+   
 
     // (7) Plant objects below
     sf::RectangleShape tomato_stalk {sf::Vector2f{5.0, p.getHeight()}};
@@ -797,6 +796,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         window.clear(sf::Color{237, 213, 192});
 
         // Draw previously defined objects
+        
         window.draw(liste);
         window.draw(skygge1);
         window.draw(skygge);
@@ -825,6 +825,7 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         window.draw(hus1);
         window.draw(hus);
         window.draw(sol);
+        
         
               
         
