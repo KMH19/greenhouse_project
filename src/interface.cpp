@@ -136,10 +136,11 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     //  The glass inside the tube 
     sf::RectangleShape glass;
     glass.setSize(sf::Vector2f(180, 480));
-    glass.setFillColor(sf::Color::White);
+    glass.setFillColor(sf::Color{237, 213, 192});
     glass.setOutlineColor(sf::Color::Black);
     glass.setOutlineThickness(1);
     glass.setPosition(120, 20);
+
     // Compost door  
     sf::RectangleShape door;
     door.setSize(sf::Vector2f(120, 160));
@@ -327,7 +328,20 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
     sol.setOutlineColor(sf::Color{245, 182, 98});
     sol.setOutlineThickness(5);
     sol.setPosition(1740, 215);
+    
+    sf::RectangleShape plantebund;
+    plantebund.setSize(sf::Vector2f(170, 10));
+    plantebund.setFillColor(sf::Color{143, 98, 59});
+    plantebund.setOutlineColor(sf::Color{143, 98, 59});
+    plantebund.setOutlineThickness(5);
+    plantebund.setPosition(125, 484);
 
+    sf::RectangleShape plantebund1;
+    plantebund1.setSize(sf::Vector2f(170, 10));
+    plantebund1.setFillColor(sf::Color{0, 0, 0});
+    plantebund1.setOutlineColor(sf::Color{0, 0, 0});
+    plantebund1.setOutlineThickness(5);
+    plantebund1.setPosition(125, 494);
    
 
     // (7) Plant objects below
@@ -802,6 +816,8 @@ void Simulation::Interface::Init(Plant& p, SensorInput& s, ClimateControl& c, Ha
         window.draw(skygge);
         window.draw(tube);
         window.draw(glass);
+        window.draw(plantebund);
+        window.draw(plantebund1);
         window.draw(door);
         window.draw(knob);
         window.draw(gulv);
